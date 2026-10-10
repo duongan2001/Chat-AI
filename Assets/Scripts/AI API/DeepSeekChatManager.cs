@@ -32,21 +32,6 @@ using Newtonsoft.Json.Linq;
 // Nếu bạn dùng DeepSeekChatManager thay thế hoàn toàn Gemini, hãy xoá 2 class này
 // khỏi GeminiChatManager.cs, hoặc ngược lại — chỉ giữ 1 bản duy nhất trong project.
 
-
-[Serializable]
-public class ChatHistoryItem
-{
-    public string role; // "user" hoặc "model"/"assistant"
-    public string text;
-}
-
-public class ParsedChatReply
-{
-    public string displayText;
-    public bool hasImage;
-    public string imagePromptDescription;
-}
-
 public class DeepSeekChatManager : MonoBehaviour
 {
     //==================== SINGLETON ====================

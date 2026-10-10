@@ -1,6 +1,45 @@
-using UnityEngine;
+using System;
 
-public class Message : MonoBehaviour
+[Serializable]
+public class Message
 {
-	//Dummy class. Use different settings or provide .NET dll files for better decompilation output
+    #region VARIABLES
+
+    public MessageType messageType;
+   
+    public bool isMessageFromUser;
+    public string textContent;
+    public string photoFilePath;
+
+    #endregion
+
+
+    #region MESSAGE GET METHODS
+
+    public string GetMessageTextContent()
+    {
+        return textContent ?? string.Empty;
+    }
+
+    public string GetMessagePhotoFilePath()
+    {
+        return photoFilePath ?? string.Empty;
+    }
+
+    #endregion
+
+
+    #region MESSAGE SET METHODS
+
+    public void SetMessageTextContent(string value)
+    {
+        textContent = value ?? string.Empty;
+    }
+
+    public void SetMessagePhotoFilePath(string value)
+    {
+        photoFilePath = value ?? string.Empty;
+    }
+
+    #endregion
 }
