@@ -36,6 +36,8 @@ public class ChatHistoryManager : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         if (Instance != this)
             return;
 

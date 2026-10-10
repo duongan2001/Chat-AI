@@ -40,6 +40,8 @@ public class CharacterDataManager : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         if (Instance != this)
         {
             return;
