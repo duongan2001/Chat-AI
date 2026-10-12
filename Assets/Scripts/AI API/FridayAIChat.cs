@@ -1,260 +1,475 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-/// <summary>
-/// Script trò chuyện (chat) qua FRIDAYAI (fridayaix.com) — dùng endpoint /v1/chat/completions,
-/// đây là endpoint CHÍNH mà FridayAI có tài liệu công khai đầy đủ (khác với endpoint sinh ảnh).
-/// Hỗ trợ Claude, GPT, Gemini... chỉ cần đổi tên model.
-///
-/// Gắn script này vào 1 GameObject, gọi SendMessage("câu hỏi") để nhận phản hồi text.
-/// </summary>
 public class FridayAIChat : MonoBehaviour
 {
+    #region VARIABLES
+
     public static FridayAIChat Instance;
 
-    [Header("API Config")]
-    [Tooltip("API Key lấy từ oneai.fridayaix.com/keys")]
-    [SerializeField] private string apiKey = "YOUR_FRIDAYAI_API_KEY";
-
-    [Tooltip("Base URL của FridayAI")]
+    [Header("--- FRIDAY AI API ---")]
+    [SerializeField] private string apiKey = "YOUR_API_KEY";
     [SerializeField] private string baseUrl = "https://oneai.fridayaix.com";
-
-    [Tooltip("Model chat. Đang dùng OpenAI. Các lựa chọn khác trên FridayAI: gpt-4o (đa phương thức, xử lý ảnh), gpt-4o-mini (rẻ nhất), claude-sonnet-4.6, gemini-2.5-pro")]
     [SerializeField] private string model = "gpt-4o-mini";
-
-    [Tooltip("System prompt — vai trò/tính cách của AI trong suốt cuộc trò chuyện")]
-    [TextArea(3, 4)]
-    public string systemPrompt = "Bạn là một trợ lý AI hữu ích, trả lời ngắn gọn bằng tiếng Việt.";
-
-    [Tooltip("Số token tối đa cho câu trả lời")]
+    [TextArea(3, 8)] public string systemPrompt;
     [SerializeField] private int maxTokens = 1024;
-
-    [Tooltip("Độ sáng tạo: 0 = chính xác/lặp lại, 1-2 = sáng tạo/ngẫu nhiên hơn")]
-    [Range(0f, 2f)]
-    [SerializeField] private float temperature = 0.7f;
-
-    [Header("Retry khi gặp lỗi 429")]
+    [Range(0f, 2f)][SerializeField] private float temperature = 0.7f;
+    [SerializeField] private int maxHistoryMessages = 30;
     [SerializeField] private int maxRetries = 3;
     [SerializeField] private float retryDelaySeconds = 5f;
 
-    [Header("Kết quả")]
-    [TextArea(3, 10)]
     public string lastReply;
+    public bool IsRequesting { get; private set; }
+    public int CurrentCharacterDataIndex { get; private set; } = -1;
 
-    /// <summary>
-    /// Bắn ra khi nhận được câu trả lời thành công. Đăng ký lắng nghe qua code, ví dụ:
-    /// fridayChat.OnReplyReceived += (reply) => { chatText.text = reply; };
-    /// </summary>
+    // The character index is the CharacterDataManager array index, NOT characterId.
+    // Original events remain compatible with existing listeners.
     public event Action<string> OnReplyReceived;
-
-    /// <summary>
-    /// Bắn ra khi có lỗi, kèm message lỗi để hiển thị cho người dùng nếu cần.
-    /// </summary>
     public event Action<string> OnError;
+    // Indexed events let the ChatPanel route replies to the right character.
+    public event Action<int, string> OnCharacterReplyReceived;
+    public event Action<int, string> OnCharacterError;
+    public event Action<int, bool> OnRequestStateChanged;
 
-    private string ChatUrl => $"{baseUrl}/v1/chat/completions";
-    private string ModelsUrl => $"{baseUrl}/v1/models";
+    private int queuedVersion;
+    private Coroutine processingCoroutine;
+    private bool openingRequested;
 
+    #endregion
 
-    private void Start()
+    #region UNITY METHODS
+
+    private void Awake()
     {
-        Instance = this;
-    }
-
-
-    /// <summary>
-    /// Gọi hàm này (ví dụ chuột phải component → "List Available Models" trong Editor,
-    /// hoặc gán vào 1 nút debug) để xem CHÍNH XÁC danh sách model mà tài khoản/nhóm của bạn
-    /// trên FridayAI được phép dùng — thay vì đoán mò rồi dính lỗi "not supported by any
-    /// configured account in this group".
-    /// </summary>
-    [ContextMenu("List Available Models")]
-    public void ListAvailableModels()
-    {
-        StartCoroutine(ListAvailableModelsRoutine());
-    }
-
-    private IEnumerator ListAvailableModelsRoutine()
-    {
-        Debug.Log($"[FridayAI Chat] Đang lấy danh sách model khả dụng từ {ModelsUrl} ...");
-
-        using (UnityWebRequest request = UnityWebRequest.Get(ModelsUrl))
+        if (Instance != null && Instance != this)
         {
-            request.SetRequestHeader("Authorization", "Bearer " + apiKey);
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
-            yield return request.SendWebRequest();
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
 
-            if (request.result != UnityWebRequest.Result.Success)
+    #endregion
+
+    #region CHARACTER METHODS
+
+    public bool SetCharacter(int characterDataIndex)
+    {
+        if (IsRequesting && CurrentCharacterDataIndex != characterDataIndex)
+            return false;
+
+        if (CharacterDataManager.Instance == null ||
+            CharacterDataManager.Instance.characterDatas == null ||
+            characterDataIndex < 0 ||
+            characterDataIndex >= CharacterDataManager.Instance.characterDatas.Length)
+            return false;
+
+        CharacterDataSO data = CharacterDataManager.Instance.characterDatas[characterDataIndex];
+        if (data == null) return false;
+
+        if (CurrentCharacterDataIndex != characterDataIndex)
+        {
+            queuedVersion = 0;
+            openingRequested = false;
+        }
+
+        CurrentCharacterDataIndex = characterDataIndex;
+        systemPrompt = data.systemPrompt;
+        return true;
+    }
+
+    #endregion
+
+    #region PUBLIC CHAT METHODS
+
+    // Call AFTER ChatPanel has saved the new user Message in ChatHistoryManager.
+    // The text argument is retained to match the existing ChatPanel call.
+    public void UserSendMessage(string text)
+    {
+        if (CurrentCharacterDataIndex < 0 || string.IsNullOrWhiteSpace(text)) return;
+        queuedVersion++;
+        StartProcessingIfNeeded();
+    }
+
+    public void SendMessage(string text) { UserSendMessage(text); }
+
+    // The opening instruction is sent to the API but is NOT saved as a fake user message.
+    public void GenerateOpeningMessage()
+    {
+        if (CurrentCharacterDataIndex < 0 || IsRequesting || openingRequested) return;
+        if (ChatHistoryManager.Instance == null) return;
+
+        ChatHistory history = ChatHistoryManager.Instance.LoadChatHistory(CurrentCharacterDataIndex);
+        if (history != null && history.messages != null && history.messages.Count > 0) return;
+
+        openingRequested = true;
+        StartProcessingIfNeeded();
+    }
+
+    private void StartProcessingIfNeeded()
+    {
+        if (IsRequesting || processingCoroutine != null) return;
+        if (ChatHistoryManager.Instance == null)
+        {
+            EmitError(CurrentCharacterDataIndex, "ChatHistoryManager not found.");
+            return;
+        }
+        processingCoroutine = StartCoroutine(ProcessChatRoutine());
+    }
+
+    #endregion
+
+    #region PROCESSING METHODS
+
+    private IEnumerator ProcessChatRoutine()
+    {
+        IsRequesting = true;
+        int characterIndex = CurrentCharacterDataIndex;
+        OnRequestStateChanged?.Invoke(characterIndex, true);
+
+        bool firstRequestIsOpening = openingRequested;
+        openingRequested = false;
+        bool hasWork = true;
+
+        while (hasWork)
+        {
+            int versionAtStart = queuedVersion;
+            bool opening = firstRequestIsOpening;
+            firstRequestIsOpening = false;
+
+            JArray messages = BuildMessages(characterIndex, opening);
+            string reply = null;
+            string error = null;
+
+            yield return StartCoroutine(RequestReplyRoutine(messages,
+                value => reply = value,
+                value => error = value));
+
+            if (!string.IsNullOrEmpty(error) || string.IsNullOrWhiteSpace(reply))
             {
-                Debug.LogError($"[FridayAI Chat] Không lấy được danh sách model ({request.responseCode}): {request.downloadHandler.text}");
-                yield break;
+                string errorMessage = string.IsNullOrEmpty(error) ? "Empty AI reply." : error;
+
+                Debug.LogError("[FridayAI] " + errorMessage);
+
+                // Generate a localized fallback message.
+                string fallbackReply = GetAIBusyMessage();
+
+                // Save fallback to chat history.
+                lastReply = fallbackReply;
+                SaveAIReply(characterIndex, fallbackReply);
+
+                // Notify UI to display the fallback bubble.
+                OnCharacterReplyReceived?.Invoke(characterIndex, fallbackReply);
+                OnReplyReceived?.Invoke(fallbackReply);
+
+                // Stop processing pending requests after an API failure.
+                break;
             }
 
-            try
-            {
-                JObject root = JObject.Parse(request.downloadHandler.text);
-                var data = root["data"] as JArray;
+            lastReply = reply.Trim();
+            SaveAIReply(characterIndex, lastReply);
+            OnCharacterReplyReceived?.Invoke(characterIndex, lastReply);
+            OnReplyReceived?.Invoke(lastReply);
 
-                if (data == null || data.Count == 0)
-                {
-                    Debug.LogWarning("[FridayAI Chat] Danh sách model trả về rỗng.");
-                    yield break;
-                }
+            // User messages arriving after the request snapshot are batched
+            // into ONE new request, based on the latest saved chat history.
+            hasWork = queuedVersion != versionAtStart;
+        }
 
-                var sb = new StringBuilder();
-                sb.AppendLine($"[FridayAI Chat] ✅ Tài khoản bạn được phép dùng {data.Count} model:");
-                foreach (var m in data)
-                {
-                    string id = m["id"]?.ToString();
-                    if (!string.IsNullOrEmpty(id)) sb.AppendLine("  - " + id);
-                }
-                Debug.Log(sb.ToString());
-            }
-            catch (JsonException e)
+        IsRequesting = false;
+        processingCoroutine = null;
+        OnRequestStateChanged?.Invoke(characterIndex, false);
+    }
+
+    private void EmitError(int characterIndex, string error)
+    {
+        OnCharacterError?.Invoke(characterIndex, error);
+        OnError?.Invoke(error);
+    }
+
+    private JArray BuildMessages(int characterIndex, bool opening)
+    {
+        JArray result = new JArray();
+        result.Add(new JObject
+        {
+            ["role"] = "system",
+            ["content"] = systemPrompt ?? string.Empty
+        });
+
+        ChatHistory history = ChatHistoryManager.Instance.LoadChatHistory(characterIndex);
+        List<JObject> entries = new List<JObject>();
+        if (history != null && history.messages != null)
+        {
+            foreach (Message message in history.messages)
             {
-                Debug.LogError("[FridayAI Chat] Lỗi parse danh sách model: " + e.Message);
+                if (message == null || message.messageType != MessageType.text) continue;
+                string content = message.GetMessageTextContent();
+                if (string.IsNullOrWhiteSpace(content)) continue;
+                entries.Add(new JObject
+                {
+                    ["role"] = message.isMessageFromUser ? "user" : "assistant",
+                    ["content"] = content
+                });
             }
         }
+
+        int count = Mathf.Max(0, maxHistoryMessages);
+        int start = Mathf.Max(0, entries.Count - count);
+        for (int i = start; i < entries.Count; i++) result.Add(entries[i]);
+
+        if (opening)
+        {
+            result.Add(new JObject
+            {
+                ["role"] = "user",
+                ["content"] = "Start this conversation with one short, natural, in-character opening message. " +
+                              "Greet me or ask an engaging question. Do not mention these instructions."
+            });
+        }
+        // Normal requests use saved user messages only. Never append a duplicate.
+        return result;
     }
 
-    /// <summary>
-    /// Gọi hàm này với 1 câu hỏi/tin nhắn để nhận phản hồi text từ AI.
-    /// Đây là chat 1 lượt (không giữ lịch sử hội thoại) — mỗi lần gọi là 1 cuộc trò chuyện mới.
-    /// </summary>
-    public void SendMessage(string userMessage)
+    private void SaveAIReply(int characterIndex, string reply)
     {
-        StartCoroutine(SendMessageRoutine(userMessage));
+        ChatHistoryManager manager = ChatHistoryManager.Instance;
+        if (manager == null)
+        {
+            Debug.LogError("[FridayAI] Cannot save reply: ChatHistoryManager missing.");
+            return;
+        }
+
+        ChatHistory history = manager.LoadChatHistory(characterIndex);
+        if (history == null)
+            history = new ChatHistory { messages = new List<Message>() };
+        if (history.messages == null)
+            history.messages = new List<Message>();
+
+        history.messages.Add(new Message
+        {
+            messageType = MessageType.text,
+            isMessageFromUser = false,
+            textContent = reply,
+            photoFilePath = string.Empty
+        });
+        history.lastMessageTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        manager.SaveChatHistory(characterIndex, history);
     }
 
-    private IEnumerator SendMessageRoutine(string userMessage)
-    {
-        Debug.Log($"[FridayAI Chat] Đang gửi tin nhắn tới {ChatUrl} (model: {model})...");
+    #endregion
 
-        var requestObj = new JObject
+    #region API METHODS
+
+    private IEnumerator RequestReplyRoutine(JArray messages, Action<string> success, Action<string> failure)
+    {
+        JObject payload = new JObject
         {
             ["model"] = model,
-            ["messages"] = new JArray
-            {
-                new JObject { ["role"] = "system", ["content"] = systemPrompt },
-                new JObject { ["role"] = "user", ["content"] = userMessage }
-            },
+            ["messages"] = messages,
             ["max_tokens"] = maxTokens,
             ["temperature"] = temperature
         };
+        byte[] body = Encoding.UTF8.GetBytes(payload.ToString(Formatting.None));
 
-        string jsonBody = requestObj.ToString(Formatting.None);
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
-
-        int attempt = 0;
-
-        while (true)
+        for (int attempt = 0; attempt <= maxRetries; attempt++)
         {
-            attempt++;
-
-            using (UnityWebRequest request = new UnityWebRequest(ChatUrl, "POST"))
+            using (UnityWebRequest request = new UnityWebRequest(
+                baseUrl.TrimEnd('/') + "/v1/chat/completions", "POST"))
             {
-                request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                request.uploadHandler = new UploadHandlerRaw(body);
                 request.downloadHandler = new DownloadHandlerBuffer();
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Authorization", "Bearer " + apiKey);
-
                 yield return request.SendWebRequest();
 
-                if (request.result != UnityWebRequest.Result.Success)
+                if (request.result == UnityWebRequest.Result.Success)
                 {
-                    string errorBody = request.downloadHandler.text;
-
-                    if (request.responseCode == 429 && attempt <= maxRetries)
+                    try
                     {
-                        Debug.LogWarning($"[FridayAI Chat] 429 Too Many Requests (lần {attempt}/{maxRetries}). Thử lại sau {retryDelaySeconds:F1}s...");
-                        yield return new WaitForSeconds(retryDelaySeconds);
-                        continue;
+                        JObject response = JObject.Parse(request.downloadHandler.text);
+                        string reply = response["choices"]?[0]?["message"]?["content"]?.ToString();
+                        if (string.IsNullOrWhiteSpace(reply))
+                            failure("FridayAI returned an empty reply.");
+                        else
+                            success(reply);
                     }
-
-                    string errorMsg = ParseErrorMessage(errorBody, request.responseCode);
-                    Debug.LogError($"[FridayAI Chat] Lỗi request ({request.responseCode}): {errorMsg}\n{errorBody}");
-                    OnError?.Invoke(errorMsg);
+                    catch (Exception ex) { failure("Invalid FridayAI response: " + ex.Message); }
                     yield break;
                 }
 
-                string reply = ExtractReplyFromResponse(request.downloadHandler.text);
-
-                if (string.IsNullOrEmpty(reply))
+                if (request.responseCode == 429 && attempt < maxRetries)
                 {
-                    Debug.LogError("[FridayAI Chat] Không tìm thấy nội dung trả lời trong response:\n" + request.downloadHandler.text);
-                    OnError?.Invoke("Không nhận được nội dung trả lời từ server.");
-                    yield break;
+                    yield return new WaitForSecondsRealtime(Mathf.Max(0f, retryDelaySeconds));
+                    continue;
                 }
 
-                lastReply = reply;
-                Debug.Log($"[FridayAI Chat] ✅ Nhận được phản hồi: {reply}");
-                OnReplyReceived?.Invoke(reply);
+                string details = request.downloadHandler != null ? request.downloadHandler.text : "";
+                failure("FridayAI HTTP " + request.responseCode + ": " + details);
                 yield break;
             }
         }
     }
 
-    /// <summary>
-    /// Response chuẩn OpenAI Chat Completions: { "choices": [ { "message": { "content": "..." } } ] }
-    /// </summary>
-    private string ExtractReplyFromResponse(string json)
+    [ContextMenu("List Available Models")]
+    public void ListAvailableModels() { StartCoroutine(ListModelsRoutine()); }
+
+    private IEnumerator ListModelsRoutine()
     {
-        try
+        using (UnityWebRequest request = UnityWebRequest.Get(baseUrl.TrimEnd('/') + "/v1/models"))
         {
-            JObject root = JObject.Parse(json);
-            var choices = root["choices"] as JArray;
-
-            if (choices == null || choices.Count == 0)
+            request.SetRequestHeader("Authorization", "Bearer " + apiKey);
+            yield return request.SendWebRequest();
+            if (request.result != UnityWebRequest.Result.Success)
             {
-                return null;
+                Debug.LogError("[FridayAI] Models: " + request.error);
+                yield break;
             }
-
-            return choices[0]["message"]?["content"]?.ToString();
-        }
-        catch (JsonException e)
-        {
-            Debug.LogError("[FridayAI Chat] Lỗi parse JSON: " + e.Message);
-            return null;
+            Debug.Log("[FridayAI] Available models: " + request.downloadHandler.text);
         }
     }
 
-    /// <summary>
-    /// Cố gắng lấy message lỗi cụ thể từ response, kèm phân biệt vài loại lỗi thường gặp.
-    /// </summary>
-    private string ParseErrorMessage(string errorJson, long statusCode)
+    #endregion
+
+
+    #region AI ERROR FALLBACK METHODS
+
+    private string GetAIBusyMessage()
     {
-        try
+        int languageId = 0;
+
+        if (MultiLanguageManager.Instance != null)
         {
-            JObject err = JObject.Parse(errorJson);
-            string code = err["error"]?["code"]?.ToString();
-            string message = err["error"]?["message"]?.ToString();
-
-            if (code == "billing_hard_limit_reached")
-            {
-                return "Hệ thống backend đã chạm giới hạn billing (không phải do credit tài khoản bạn trên FridayAI). Vui lòng báo cho FridayAI để xử lý.";
-            }
-
-            string type = err["error"]?["type"]?.ToString();
-            if (type == "model_not_found")
-            {
-                return $"Model \"{model}\" không được cấu hình cho tài khoản/nhóm của bạn. Gọi ListAvailableModels() (hoặc chuột phải component → \"List Available Models\") để xem danh sách model bạn thực sự được dùng.";
-            }
-
-            if (statusCode == 401 || statusCode == 403)
-            {
-                return "API key không hợp lệ hoặc hết hạn.";
-            }
-
-            return message ?? $"Lỗi không xác định (mã {statusCode}).";
+            languageId = MultiLanguageManager.Instance.GetCurrentLanguageId();
         }
-        catch
+
+        string[] messages;
+
+        switch (languageId)
         {
-            return $"Lỗi không xác định (mã {statusCode}).";
+            case 1: // Vietnamese
+                messages = new string[]
+                {
+                "Xin lỗi nha, mình đang bận chút. Lát nữa nói chuyện tiếp nhé?",
+                "Đợi mình một chút nha, giờ mình đang có chút việc.",
+                "Mình đang hơi bận xíu, lát nữa nhắn bạn tiếp nha!"
+                };
+                break;
+
+            case 2: // Thai
+                messages = new string[]
+                {
+                "ขอโทษนะ ตอนนี้ฉันยุ่งนิดหน่อย ไว้คุยกันทีหลังได้ไหม?",
+                "รอฉันแป๊บนึงนะ ตอนนี้มีอะไรต้องทำหน่อย",
+                "ตอนนี้ฉันติดธุระนิดหน่อย เดี๋ยวค่อยคุยกันนะ"
+                };
+                break;
+
+            case 3: // Japanese
+                messages = new string[]
+                {
+                "ごめんね、今ちょっと忙しいの。また後で話そう？",
+                "ちょっと待っててね。今少し用事があるんだ。",
+                "今ちょっと手が離せないから、また後でメッセージするね。"
+                };
+                break;
+
+            case 4: // Korean
+                messages = new string[]
+                {
+                "미안해, 지금 조금 바빠. 이따 다시 얘기할까?",
+                "잠깐만 기다려 줘. 지금 할 일이 좀 있어.",
+                "지금 잠깐 일이 있어서, 조금 있다가 다시 얘기하자!"
+                };
+                break;
+
+            case 5: // Hindi
+                messages = new string[]
+                {
+                "सॉरी, अभी थोड़ा बिज़ी हूँ। थोड़ी देर बाद बात करें?",
+                "बस थोड़ा इंतज़ार करना, अभी कुछ काम है।",
+                "अभी थोड़ा काम में फँसी हूँ, बाद में बात करती हूँ!"
+                };
+                break;
+
+            case 6: // Indonesian
+                messages = new string[]
+                {
+                "Maaf ya, aku lagi agak sibuk. Kita ngobrol nanti lagi?",
+                "Tunggu sebentar ya, aku lagi ada urusan.",
+                "Aku lagi sibuk sedikit nih, nanti kita lanjut ngobrol ya!"
+                };
+                break;
+
+            case 7: // Burmese
+                messages = new string[]
+                {
+                "ဆောရီးနော်၊ အခု နည်းနည်း အလုပ်ရှုပ်နေလို့ နောက်မှ ပြန်စကားပြောကြမလား?",
+                "ခဏလောက် စောင့်ပေးနော်၊ အခု လုပ်စရာလေးရှိလို့။",
+                "အခု နည်းနည်း မအားသေးလို့ နောက်မှ ဆက်ပြောကြမယ်နော်။"
+                };
+                break;
+
+            case 8: // Spanish
+                messages = new string[]
+                {
+                "Perdón, estoy un poquito ocupada ahora. ¿Hablamos luego?",
+                "Espera un momentito, tengo algo que hacer.",
+                "Ahora estoy algo liada, ¡seguimos hablando en un rato!"
+                };
+                break;
+
+            case 9: // Portuguese
+                messages = new string[]
+                {
+                "Desculpa, tô um pouquinho ocupada agora. A gente conversa depois?",
+                "Espera só um pouquinho, tenho uma coisinha pra resolver.",
+                "Tô meio ocupada agora, mas a gente conversa daqui a pouco!"
+                };
+                break;
+
+            case 10: // Chinese
+                messages = new string[]
+                {
+                "不好意思呀，我现在有点忙，等会儿再聊好吗？",
+                "稍微等我一下哦，我现在有点事要忙。",
+                "我这会儿有点忙，晚点再陪你聊天呀！"
+                };
+                break;
+
+            case 11: // Russian
+                messages = new string[]
+                {
+                "Прости, я сейчас немного занята. Поболтаем позже?",
+                "Подожди меня чуть-чуть, у меня сейчас есть дела.",
+                "Я сейчас немного занята, давай поговорим чуть позже!"
+                };
+                break;
+
+            case 0: // English
+            default:
+                messages = new string[]
+                {
+                "Hey, sorry! I'm a little busy right now. Can we talk in a bit?",
+                "Give me a sec, I've got something to take care of.",
+                "I'm kinda busy right now, but let's catch up in a little while!"
+                };
+                break;
         }
+
+        return messages[UnityEngine.Random.Range(0, messages.Length)];
     }
+
+    #endregion
 }

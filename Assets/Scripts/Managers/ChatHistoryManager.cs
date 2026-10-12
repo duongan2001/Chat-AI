@@ -451,4 +451,34 @@ public class ChatHistoryManager : MonoBehaviour
     }
 
     #endregion
+
+
+    #region MESSAGE SAVE METHODS
+
+    public void AddChatMessage(int characterDataIndex, Message message)
+    {
+        if (message == null)
+            return;
+
+        ChatHistory history = LoadChatHistory(characterDataIndex);
+
+        if (history == null)
+        {
+            history = new ChatHistory
+            {
+                messages = new List<Message>()
+            };
+        }
+
+        if (history.messages == null)
+            history.messages = new List<Message>();
+
+        history.messages.Add(message);
+
+        history.lastMessageTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        SaveChatHistory(characterDataIndex, history);
+    }
+
+    #endregion
 }

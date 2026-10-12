@@ -297,8 +297,31 @@ public class ChatItemHome : MonoBehaviour
 
     public void OnChatItemClick()
     {
-        // Open Character Profile Panel.
-        // You will implement this later.
+        //Sound
+
+        if (characterData == null || UIManager.Instance == null)
+            return;
+
+        if (characterDataIndex < 0)
+            characterDataIndex = GetCharacterDataIndex();
+
+        if (CharacterDataManager.Instance == null || characterDataIndex < 0)
+            return;
+
+        bool isLocked = CharacterDataManager.Instance.IsCharacterLocked(characterDataIndex);
+
+        if (isLocked)
+        {
+            // Character is locked -> Show Unlock Panel.
+            UIManager.Instance.unlockCharacterPopup.SetCharacterData(characterData);
+            UIManager.Instance.unlockCharacterPopup.Show();
+        }
+        else
+        {
+            // Character is unlocked -> Show Profile Panel.
+            UIManager.Instance.characterProfilePanel.SetCharacterData(characterData);
+            UIManager.Instance.characterProfilePanel.Show();
+        }
     }
 
     #endregion
