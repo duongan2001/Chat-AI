@@ -265,6 +265,7 @@ public class UnlockCharacterPanelUIManager : PanelBaseUIController
             Debug.Log("[UnlockCharacterPanel] Not enough Roses.");
 
             // You can open the Rose Shop here.
+            UIManager.Instance.roseNotiPopup.ShowNotEnoughRosesPopup();
             return;
         }
 

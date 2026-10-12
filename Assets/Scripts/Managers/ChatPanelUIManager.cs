@@ -241,6 +241,28 @@ public class ChatPanelUIManager : PanelBaseUIController
         dailyChatRemainText.text = remaining.ToString();
     }
 
+    private bool TryConsumeDailyChat()
+    {
+        string key = PlayerPrefKey.DailyChatRemain.ToString();
+
+        int remaining = PlayerPrefs.GetInt(key, 0);
+
+        if (remaining <= 0)
+        {
+            LoadDailyChatRemain();
+            return false;
+        }
+
+        remaining--;
+
+        PlayerPrefs.SetInt(key, remaining);
+        PlayerPrefs.Save();
+
+        LoadDailyChatRemain();
+
+        return true;
+    }
+
     #endregion
 
 
@@ -320,6 +342,15 @@ public class ChatPanelUIManager : PanelBaseUIController
         if (string.IsNullOrEmpty(messageText))
             return;
 
+        // Consume one daily chat for each user message.
+        if (!TryConsumeDailyChat())
+        {
+            if (RoseNotiUIManager.Instance != null)
+                RoseNotiUIManager.Instance.ShowNoMessageAvailablePopup();
+
+            return;
+        }
+
         Message message = new Message
         {
             messageType = MessageType.text,
@@ -329,13 +360,12 @@ public class ChatPanelUIManager : PanelBaseUIController
         };
 
         SaveMessageToHistory(message);
-
         CreateChatBubble(message);
 
         userInputField.text = "";
+
         ShowAIReplying();
 
-        // The message is already in ChatHistoryManager before requesting.
         fridayAI.UserSendMessage(messageText);
     }
 
