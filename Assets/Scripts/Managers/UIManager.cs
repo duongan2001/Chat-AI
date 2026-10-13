@@ -29,12 +29,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image[] generalButtonOffStateIcons;
 
     [Header("--- ROSE AMOUNT ---")]
-    [SerializeField] private TextMeshProUGUI[] roseAmountTexts;
+    [SerializeField] private Text[] roseAmountTexts;
 
     private const int HOME_BUTTON_ID = 0;
-    private const int CHAT_BUTTON_ID = 1;
-    private const int REWARD_BUTTON_ID = 2;
-    private const int SETTINGS_BUTTON_ID = 3;
+    private const int REWARD_BUTTON_ID = 1;
+    private const int CHAT_BUTTON_ID = 2;
+    private const int MISSION_BUTTON_ID = 3;
 
     private int currentGeneralButtonId = -1;
 
@@ -78,7 +78,6 @@ public class UIManager : MonoBehaviour
     #endregion
 
 
-
     #region ROSE METHODS
 
     public void UpdateRoseAmount(int amount)
@@ -118,7 +117,6 @@ public class UIManager : MonoBehaviour
     #endregion
 
 
-
     #region GENERAL BUTTON METHODS
 
     public void OnGeneralHomeBottomButtonClick(string button)
@@ -145,10 +143,9 @@ public class UIManager : MonoBehaviour
                 SetGeneralButtonStates(REWARD_BUTTON_ID);
                 break;
 
-            case "settings":
-            case "setting":
-                OpenSettingsPanel();
-                SetGeneralButtonStates(SETTINGS_BUTTON_ID);
+            case "mission":
+                OpenMissionPanel();
+                SetGeneralButtonStates(MISSION_BUTTON_ID);
                 break;
 
             default:
@@ -201,24 +198,24 @@ public class UIManager : MonoBehaviour
     {
         HideGeneralPanels();
 
-        //if (chatboxPanel != null)
-            //chatboxPanel.Show();
+        if (chatboxPanel != null)
+            chatboxPanel.Show();
     }
 
     private void OpenRewardPanel()
     {
         HideGeneralPanels();
 
-        //if (rewardPanel != null)
-            //rewardPanel.Show();
+        if (rewardPanel != null)
+            rewardPanel.Show();
     }
 
-    private void OpenSettingsPanel()
+    private void OpenMissionPanel()
     {
         HideGeneralPanels();
 
-        //if (settingsPanel != null)
-            //settingsPanel.Show();
+        //if (missionPanel != null)
+            //missionPanel.Show();
     }
 
     private void HideGeneralPanels()
@@ -226,14 +223,14 @@ public class UIManager : MonoBehaviour
         if (homePanel != null)
             homePanel.Hide();
 
-        //if (chatboxPanel != null)
-            //chatboxPanel.Hide();
+        if (chatboxPanel != null)
+            chatboxPanel.Hide();
 
-        //if (rewardPanel != null)
-            //rewardPanel.Hide();
+        if (rewardPanel != null)
+            rewardPanel.Hide();
 
-        //if (settingsPanel != null)
-            //settingsPanel.Hide();
+        //if (missionPanel != null)
+            //missionPanel.Hide();
     }
 
     #endregion

@@ -8900,7 +8900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &825
 GameObject:
   m_ObjectHideFlags: 0
@@ -19272,10 +19272,10 @@ RectTransform:
   - {fileID: 3173}
   m_Father: {fileID: 3107}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 106.475, y: -38.5}
-  m_SizeDelta: {x: 152.95, y: 77}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 152.95, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2404
 RectTransform:
@@ -19434,10 +19434,10 @@ RectTransform:
   - {fileID: 1942685437}
   m_Father: {fileID: 3028}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 843.3334, y: -107.875}
-  m_SizeDelta: {x: 313.33334, y: 215.75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2418
 RectTransform:
@@ -19476,10 +19476,10 @@ RectTransform:
   - {fileID: 318507368}
   m_Father: {fileID: 3238}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 176.66667, y: -107.874985}
-  m_SizeDelta: {x: 313.33334, y: 215.74997}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2424
 RectTransform:
@@ -19635,10 +19635,10 @@ RectTransform:
   - {fileID: 3319}
   m_Father: {fileID: 3107}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1677.8701, y: -38.5}
-  m_SizeDelta: {x: 208.04, y: 77}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 208.04, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2437
 RectTransform:
@@ -20597,10 +20597,10 @@ RectTransform:
   - {fileID: 2536}
   m_Father: {fileID: 3107}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 697.44006, y: -38.5}
-  m_SizeDelta: {x: 211.02, y: 77}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 211.02, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2514
 RectTransform:
@@ -21511,14 +21511,14 @@ RectTransform:
   m_GameObject: {fileID: 255}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6.25, y: 5.833334, z: 5.833334}
+  m_LocalScale: {x: 5, y: 4.6666675, z: 4.6666675}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3386}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -120}
+  m_AnchoredPosition: {x: 0, y: -58.666748}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2581
@@ -22474,10 +22474,10 @@ RectTransform:
   - {fileID: 2335}
   m_Father: {fileID: 3107}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1191.3151, y: -38.5}
-  m_SizeDelta: {x: 187.29, y: 77}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 187.29, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2666
 RectTransform:
@@ -22497,10 +22497,10 @@ RectTransform:
   - {fileID: 1409884284}
   m_Father: {fileID: 2434}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 510, y: -107.874985}
-  m_SizeDelta: {x: 980, y: 215.74997}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2667
 RectTransform:
@@ -25583,10 +25583,10 @@ RectTransform:
   - {fileID: 3375}
   m_Father: {fileID: 3107}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1429.405, y: -38.5}
-  m_SizeDelta: {x: 248.89, y: 77}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 248.89, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2926
 RectTransform:
@@ -26117,10 +26117,10 @@ RectTransform:
   - {fileID: 2864}
   m_Father: {fileID: 3107}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 283.86, y: -38.5}
-  m_SizeDelta: {x: 161.82, y: 77}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 161.82, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2979
 RectTransform:
@@ -26454,10 +26454,10 @@ RectTransform:
   - {fileID: 1578589861}
   m_Father: {fileID: 3238}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 510, y: -107.874985}
-  m_SizeDelta: {x: 313.33334, y: 215.74997}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3011
 RectTransform:
@@ -26513,10 +26513,10 @@ RectTransform:
   - {fileID: 2349}
   m_Father: {fileID: 3028}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 176.66667, y: -107.875}
-  m_SizeDelta: {x: 313.33334, y: 215.75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3017
 RectTransform:
@@ -27349,10 +27349,10 @@ RectTransform:
   - {fileID: 2118836304}
   m_Father: {fileID: 2814}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -82.5}
-  m_SizeDelta: {x: 1080, y: 165}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3087
 RectTransform:
@@ -27803,10 +27803,10 @@ RectTransform:
   - {fileID: 3011}
   m_Father: {fileID: 3107}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 950.31006, y: -38.5}
-  m_SizeDelta: {x: 254.72, y: 77}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 254.72, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3123
 RectTransform:
@@ -28602,10 +28602,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 540, y: -96}
+  m_SizeDelta: {x: 1080, y: 192}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3188
 RectTransform:
@@ -30341,10 +30341,10 @@ RectTransform:
   - {fileID: 2637}
   m_Father: {fileID: 3107}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 478.35004, y: -38.5}
-  m_SizeDelta: {x: 187.16, y: 77}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 187.16, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3334
 RectTransform:
@@ -30597,10 +30597,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3262}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 540, y: -96}
+  m_SizeDelta: {x: 1080, y: 192}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3354
 RectTransform:
@@ -30793,10 +30793,10 @@ RectTransform:
   - {fileID: 1840576915}
   m_Father: {fileID: 3238}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 843.3334, y: -107.874985}
-  m_SizeDelta: {x: 313.33334, y: 215.74997}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3366
 RectTransform:
@@ -31041,15 +31041,15 @@ RectTransform:
   m_GameObject: {fileID: 1069}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.16, y: 0.17142856, z: 0.17142856}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.2, y: 0.21428569, z: 0.21428569}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2580}
   m_Father: {fileID: 2774}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 26}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1333, y: 1180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3388
@@ -32053,10 +32053,10 @@ RectTransform:
   - {fileID: 695495692}
   m_Father: {fileID: 3028}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 510, y: -107.875}
-  m_SizeDelta: {x: 313.33334, y: 215.75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3464
 RectTransform:
@@ -33796,7 +33796,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3608}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5307}
+        m_TargetAssemblyTypeName: SettingsPanelUIManager, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35026,13 +35038,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0aff859a6b11f408bd53395b061eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardBackgroundImage: {fileID: 0}
-  todayRewardBackgroundSprite: {fileID: 0}
-  notTodayRewardBackgroundSprite: {fileID: 0}
-  amount: 0
-  roseIconImage: {fileID: 0}
-  roseIconOnSprite: {fileID: 0}
-  roseIconOffSprite: {fileID: 0}
+  rewardBackgroundImage: {fileID: 3749}
+  todayRewardBackgroundSprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  notTodayRewardBackgroundSprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
+  amount: 30
+  roseIconImage: {fileID: 1942685438}
+  roseIconOnSprite: {fileID: 21300000, guid: cc93ba46f4d02c94fab06ddb6bb1f732, type: 3}
+  roseIconOffSprite: {fileID: 21300000, guid: ddfa0efb4ee98f74298d1995cbbe47f9, type: 3}
 --- !u!114 &3716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35105,13 +35117,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0aff859a6b11f408bd53395b061eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardBackgroundImage: {fileID: 0}
-  todayRewardBackgroundSprite: {fileID: 0}
-  notTodayRewardBackgroundSprite: {fileID: 0}
-  amount: 0
-  roseIconImage: {fileID: 0}
-  roseIconOnSprite: {fileID: 0}
-  roseIconOffSprite: {fileID: 0}
+  rewardBackgroundImage: {fileID: 3724}
+  todayRewardBackgroundSprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  notTodayRewardBackgroundSprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
+  amount: 10
+  roseIconImage: {fileID: 318507369}
+  roseIconOnSprite: {fileID: 21300000, guid: 616bbe19ad2408c46892e8e0c3cd7be3, type: 3}
+  roseIconOffSprite: {fileID: 21300000, guid: b9bc1445a4ebe494fb3b10b11122a2ee, type: 3}
 --- !u!114 &3726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37845,7 +37857,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3902}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5483}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: OnGeneralHomeBottomButtonClick
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: reward
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38802,7 +38826,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3964}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5483}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: OnGeneralHomeBottomButtonClick
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: home
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41313,13 +41349,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0aff859a6b11f408bd53395b061eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardBackgroundImage: {fileID: 0}
-  todayRewardBackgroundSprite: {fileID: 0}
-  notTodayRewardBackgroundSprite: {fileID: 0}
-  amount: 0
-  roseIconImage: {fileID: 0}
-  roseIconOnSprite: {fileID: 0}
-  roseIconOffSprite: {fileID: 0}
+  rewardBackgroundImage: {fileID: 4121}
+  todayRewardBackgroundSprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  notTodayRewardBackgroundSprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
+  amount: 70
+  roseIconImage: {fileID: 1409884285}
+  roseIconOnSprite: {fileID: 21300000, guid: 8621e111f91abf24d9ee8ff4389d4c3e, type: 3}
+  roseIconOffSprite: {fileID: 21300000, guid: 145b35d47fc44ec49a71de9a41269a80, type: 3}
 --- !u!114 &4145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42282,7 +42318,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 4211}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -43654,7 +43690,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -43901,15 +43937,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 0}
-  m_Horizontal: 1
+  m_Content: {fileID: 2523}
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
-  m_Viewport: {fileID: 0}
+  m_Viewport: {fileID: 3277}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
   m_HorizontalScrollbarVisibility: 0
@@ -43961,6 +43997,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282f184ed752b1f4682c955d46434373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelCanvasGroup: {fileID: 3527}
+  fadeDuration: 0.25
+  showDelayTime: 0.25
+  chatboxItemPrefab: {fileID: 6390839101725029306, guid: 4e11104320bb3504c87abcbd30325e1b, type: 3}
+  emptyChatboxItem: {fileID: 1196}
+  chatboxItemContainer: {fileID: 2814}
 --- !u!114 &4361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44104,7 +44146,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4369}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5307}
+        m_TargetAssemblyTypeName: SettingsPanelUIManager, Assembly-CSharp
+        m_MethodName: OpenUrl
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: app
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46428,7 +46482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 0}
+  m_Content: {fileID: 2819}
   m_Horizontal: 1
   m_Vertical: 1
   m_MovementType: 1
@@ -46436,7 +46490,7 @@ MonoBehaviour:
   m_Inertia: 1
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
-  m_Viewport: {fileID: 0}
+  m_Viewport: {fileID: 3051}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
   m_HorizontalScrollbarVisibility: 0
@@ -47852,7 +47906,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4615}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5307}
+        m_TargetAssemblyTypeName: SettingsPanelUIManager, Assembly-CSharp
+        m_MethodName: OpenUrl
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: policy
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49473,13 +49539,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0aff859a6b11f408bd53395b061eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardBackgroundImage: {fileID: 0}
-  todayRewardBackgroundSprite: {fileID: 0}
-  notTodayRewardBackgroundSprite: {fileID: 0}
-  amount: 0
-  roseIconImage: {fileID: 0}
-  roseIconOnSprite: {fileID: 0}
-  roseIconOffSprite: {fileID: 0}
+  rewardBackgroundImage: {fileID: 4747}
+  todayRewardBackgroundSprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  notTodayRewardBackgroundSprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
+  amount: 10
+  roseIconImage: {fileID: 1578589862}
+  roseIconOnSprite: {fileID: 21300000, guid: 616bbe19ad2408c46892e8e0c3cd7be3, type: 3}
+  roseIconOffSprite: {fileID: 21300000, guid: b9bc1445a4ebe494fb3b10b11122a2ee, type: 3}
 --- !u!114 &4751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49590,13 +49656,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0aff859a6b11f408bd53395b061eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardBackgroundImage: {fileID: 0}
-  todayRewardBackgroundSprite: {fileID: 0}
-  notTodayRewardBackgroundSprite: {fileID: 0}
-  amount: 0
-  roseIconImage: {fileID: 0}
-  roseIconOnSprite: {fileID: 0}
-  roseIconOffSprite: {fileID: 0}
+  rewardBackgroundImage: {fileID: 4758}
+  todayRewardBackgroundSprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  notTodayRewardBackgroundSprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
+  amount: 10
+  roseIconImage: {fileID: 3586}
+  roseIconOnSprite: {fileID: 21300000, guid: 616bbe19ad2408c46892e8e0c3cd7be3, type: 3}
+  roseIconOffSprite: {fileID: 21300000, guid: b9bc1445a4ebe494fb3b10b11122a2ee, type: 3}
 --- !u!114 &4762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49854,7 +49920,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4780}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5307}
+        m_TargetAssemblyTypeName: SettingsPanelUIManager, Assembly-CSharp
+        m_MethodName: OpenUrl
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: managesub
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50032,7 +50110,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4783}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5529}
+        m_TargetAssemblyTypeName: RewardPanelUIManager, Assembly-CSharp
+        m_MethodName: ClaimTodayReward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50076,7 +50166,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4788}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5483}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: OnGeneralHomeBottomButtonClick
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: mission
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52486,7 +52588,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0/10)
+  m_Text: (0/5)
 --- !u!114 &4977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57422,6 +57524,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52bf2588817a84642bb4437fe108e5a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelCanvasGroup: {fileID: 3542}
+  fadeDuration: 0.25
+  showDelayTime: 0.25
+  urlJsonLink: https://drive.google.com/uc?export=download&id=1bhyzzZA_inokzj2L7ew2Yw2M_qVihJkO
+  currentLanguageText: {fileID: 5188}
 --- !u!114 &5313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58362,13 +58469,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0aff859a6b11f408bd53395b061eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardBackgroundImage: {fileID: 0}
-  todayRewardBackgroundSprite: {fileID: 0}
-  notTodayRewardBackgroundSprite: {fileID: 0}
-  amount: 0
-  roseIconImage: {fileID: 0}
-  roseIconOnSprite: {fileID: 0}
-  roseIconOffSprite: {fileID: 0}
+  rewardBackgroundImage: {fileID: 5508}
+  todayRewardBackgroundSprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  notTodayRewardBackgroundSprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
+  amount: 30
+  roseIconImage: {fileID: 1840576916}
+  roseIconOnSprite: {fileID: 21300000, guid: cc93ba46f4d02c94fab06ddb6bb1f732, type: 3}
+  roseIconOffSprite: {fileID: 21300000, guid: ddfa0efb4ee98f74298d1995cbbe47f9, type: 3}
 --- !u!114 &5368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59581,7 +59688,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5458}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5529}
+        m_TargetAssemblyTypeName: RewardPanelUIManager, Assembly-CSharp
+        m_MethodName: ClaimRosesAd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60152,9 +60271,20 @@ MonoBehaviour:
   setupInfoPanel: {fileID: 4991}
   subPanel: {fileID: 4194}
   unlockCharacterPopup: {fileID: 4450}
-  generalButtonOnStateIcons: []
-  generalButtonOffStateIcons: []
-  roseAmountTexts: []
+  generalButtonOnStateIcons:
+  - {fileID: 4208}
+  - {fileID: 4004}
+  - {fileID: 4405}
+  - {fileID: 4772}
+  generalButtonOffStateIcons:
+  - {fileID: 4740}
+  - {fileID: 3572}
+  - {fileID: 5021}
+  - {fileID: 4896}
+  roseAmountTexts:
+  - {fileID: 4515}
+  - {fileID: 4801}
+  - {fileID: 3820}
 --- !u!114 &5492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60783,6 +60913,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbe205569dac5243a2977332d2b415e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelCanvasGroup: {fileID: 3546}
+  fadeDuration: 0.25
+  showDelayTime: 0.25
+  maxAdsPerDay: 5
+  rosesPerAd: 10
+  dailyRewardItems:
+  - {fileID: 4759}
+  - {fileID: 5544}
+  - {fileID: 3715}
+  - {fileID: 3725}
+  - {fileID: 4748}
+  - {fileID: 5364}
+  - {fileID: 4144}
+  checkInButton: {fileID: 4784}
+  watchAdButton: {fileID: 5457}
+  watchAdCount: {fileID: 4976}
 --- !u!114 &5532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61063,13 +61209,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0aff859a6b11f408bd53395b061eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardBackgroundImage: {fileID: 0}
-  todayRewardBackgroundSprite: {fileID: 0}
-  notTodayRewardBackgroundSprite: {fileID: 0}
-  amount: 0
-  roseIconImage: {fileID: 0}
-  roseIconOnSprite: {fileID: 0}
-  roseIconOffSprite: {fileID: 0}
+  rewardBackgroundImage: {fileID: 5543}
+  todayRewardBackgroundSprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  notTodayRewardBackgroundSprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
+  amount: 10
+  roseIconImage: {fileID: 695495693}
+  roseIconOnSprite: {fileID: 21300000, guid: 616bbe19ad2408c46892e8e0c3cd7be3, type: 3}
+  roseIconOffSprite: {fileID: 21300000, guid: b9bc1445a4ebe494fb3b10b11122a2ee, type: 3}
 --- !u!114 &5545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61359,7 +61505,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5561}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5483}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: OnGeneralHomeBottomButtonClick
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: chat
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61991,7 +62149,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5584}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5307}
+        m_TargetAssemblyTypeName: SettingsPanelUIManager, Assembly-CSharp
+        m_MethodName: Hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76074,7 +76244,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -77029,7 +77199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -79983,7 +80153,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -87361,7 +87531,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -88131,10 +88301,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2647}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: -97.23}
-  m_SizeDelta: {x: 960, y: 194.46}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1532859193
 MonoBehaviour:
@@ -90614,7 +90784,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ddb9920a0db87bb478e314d78dafaa10, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6cd100be6c3098f4e8d05ddde05fc390, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

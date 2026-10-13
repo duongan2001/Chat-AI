@@ -454,7 +454,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3174357629174596045}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4766302239303201154}
+        m_TargetAssemblyTypeName: ChatboxItem, Assembly-CSharp
+        m_MethodName: OnChatboxButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4766302239303201154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +479,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d49eafa95e6f4e43b2b6e8463bab048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData: {fileID: 0}
+  defaultPhoto: {fileID: 3143588419162794621}
+  characterInfoText: {fileID: 5717497518718132775}
+  latestMessageText: {fileID: 1861727188819217306}
 --- !u!1 &6965465516104912456
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,10 +550,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1103d6fde85b7c9468cdf080521352d6, type: 3}
-    m_FontSize: 14
+    m_FontSize: 32
     m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
+    m_BestFit: 0
+    m_MinSize: 3
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0

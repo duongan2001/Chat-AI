@@ -59,7 +59,13 @@ public class DailyRewardItem : MonoBehaviour
         if (rewardBackgroundImage == null)
             return;
 
-        rewardBackgroundImage.sprite = isTodayReward ? todayRewardBackgroundSprite : notTodayRewardBackgroundSprite;
+        Sprite targetSprite = isTodayReward ? todayRewardBackgroundSprite : notTodayRewardBackgroundSprite;
+
+        if (targetSprite != null)
+        {
+            rewardBackgroundImage.sprite = targetSprite;
+            rewardBackgroundImage.enabled = true;
+        }
     }
 
     #endregion
@@ -72,8 +78,15 @@ public class DailyRewardItem : MonoBehaviour
         if (roseIconImage == null)
             return;
 
-        roseIconImage.sprite = isClaimed ? roseIconOffSprite : roseIconOnSprite;
+        Sprite targetSprite = isClaimed ? roseIconOffSprite : roseIconOnSprite;
+
+        if (targetSprite != null)
+        {
+            roseIconImage.sprite = targetSprite;
+            roseIconImage.enabled = true;
+        }
     }
+
 
     #endregion
 }
