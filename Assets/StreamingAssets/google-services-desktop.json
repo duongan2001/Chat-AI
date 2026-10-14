@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "505205126926",
+    "project_id": "trs--chatai",
+    "storage_bucket": "trs--chatai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505205126926:android:e52e421f89066f3f48095f",
+        "android_client_info": {
+          "package_name": "com.ai.chat.girlfriend.love.date.couple.photos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABpcamNt7L5hns0zxaXJkAO0HrctSX3Rw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,13 +1,14 @@
 fileFormatVersion: 2
-guid: 9b9529a2ea72b7a4d87f1c51725a11c3
-timeCreated: 1791230800
-licenseType: Free
+guid: 63e1181a1f2e47d5b3ff52c45f589677
+labels:
+- al_max
+- al_max_export_path-MaxSdk/Scripts/MaxUserData.cs
 MonoImporter:
-  serializedVersion: 2
   externalObjects: {}
+  serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
-  icon: {fileID: 0}
+  icon: {instanceID: 0}
   userData:
   assetBundleName:
   assetBundleVariant:

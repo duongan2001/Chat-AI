@@ -266,23 +266,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &16
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 27}
-  - component: {fileID: 62}
-  m_Layer: 0
-  m_Name: GDPR Consent Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!4 &17
 Transform:
   m_ObjectHideFlags: 0
@@ -428,21 +411,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!4 &27
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -787,6 +755,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d14a157561aa5419a84b0cc1cc506a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSubscriptionPurchased: 0
+  isRemoveAdPurchased: 0
+  subTimeUnit: d
+  currentWeeklySubPrice: 
+  currentYearlySubPrice: 
 --- !u!114 &45
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,6 +864,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213117c7c23d4fc4ba894226517750b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFirebaseReady: 0
+  canShowOpenAd: 0
+  canShowInterstitialAd: 0
+  interstitialAdCooldown: 50
+  interstitialAdCooldown_ing: 0
 --- !u!114 &50
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,6 +984,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a132ea1f1aee63949a8b45a0ebdfc2ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interstitialAdUnitId: d55c61b723be9d21
+  rewardedAdUnitId: 413a54d043cc7f81
+  bannerAdUnitId: 353747ec5f95951b
+  openAdUnitId: 
+  interstitialRetryDelay: 2
+  rewardedRetryDelay: 2
+  isInitialized: 0
 --- !u!114 &56
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1146,18 +1131,6 @@ MonoBehaviour:
   loadingBarValue: {fileID: 57}
   loadingDuration: 5
   nextSceneName: App Main Scene
---- !u!114 &62
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9529a2ea72b7a4d87f1c51725a11c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!223 &63
 Canvas:
   m_ObjectHideFlags: 0
@@ -1181,19 +1154,76 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1001 &1280401562
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922152, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334877794752922154, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
+      propertyPath: m_Name
+      value: GDPR Consent Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9ba34ed56c13f6144920e29c0fd3cc23, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 17}
-  - {fileID: 18}
+  - {fileID: 26}
   - {fileID: 19}
+  - {fileID: 24}
+  - {fileID: 18}
+  - {fileID: 1280401562}
+  - {fileID: 17}
+  - {fileID: 23}
   - {fileID: 20}
   - {fileID: 21}
   - {fileID: 22}
-  - {fileID: 23}
-  - {fileID: 24}
-  - {fileID: 25}
-  - {fileID: 26}
-  - {fileID: 27}
   - {fileID: 42}
+  - {fileID: 25}
