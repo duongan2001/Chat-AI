@@ -133,4 +133,34 @@ public class SaveLoadPlayerPrefManager : MonoBehaviour
     }
 
     #endregion
+
+
+    #region REWARDED AD DATA
+
+    public int GetAdsWatchedToday()
+    {
+        string today = DateTime.Now.ToString("yyyy-MM-dd");
+
+        string dateKey = PlayerPrefKey.LastAdWatchDate.ToString();
+        string countKey = PlayerPrefKey.AdsWatchedToday.ToString();
+
+        if (PlayerPrefs.GetString(dateKey, "") != today)
+        {
+            PlayerPrefs.SetString(dateKey, today);
+            PlayerPrefs.SetInt(countKey, 0);
+            PlayerPrefs.Save();
+        }
+
+        return PlayerPrefs.GetInt(countKey, 0);
+    }
+
+    public void AddAdsWatchedToday()
+    {
+        int watched = GetAdsWatchedToday();
+
+        PlayerPrefs.SetInt(PlayerPrefKey.AdsWatchedToday.ToString(), watched + 1);
+        PlayerPrefs.Save();
+    }
+
+    #endregion
 }

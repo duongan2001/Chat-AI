@@ -288,7 +288,7 @@ public class UIManager : MonoBehaviour
 
         if (isSetupCompleted)
         {
-            ShowHomeAfterSetup();
+            CheckSubscriptionOnStartup();
             return;
         }
 
@@ -344,6 +344,17 @@ public class UIManager : MonoBehaviour
         {
             ShowHomeAfterSetup();
         }
+    }
+
+    private void CheckSubscriptionOnStartup()
+    {
+        if (checkSubscriptionCoroutine != null)
+        {
+            StopCoroutine(checkSubscriptionCoroutine);
+            checkSubscriptionCoroutine = null;
+        }
+
+        checkSubscriptionCoroutine = StartCoroutine(CheckSubscriptionAfterSetup());
     }
 
     #endregion

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +23,8 @@ public class RewardPanelUIManager : PanelBaseUIController
     [SerializeField] private Button watchAdButton;
     [SerializeField] private Text watchAdCount;
 
+    private bool isWatchingRewardedAd;
+    public bool IsWatchingRewardedAd => isWatchingRewardedAd;
     #endregion
 
     #region UNITY METHODS
@@ -99,7 +101,6 @@ public class RewardPanelUIManager : PanelBaseUIController
                 lastRewardClaimedDate = string.Empty,
                 lastRewardClaimedDay = 0,
                 isTodayClaimed = false,
-                adsWatchedToday = 0,
                 lastActiveDate = string.Empty
             };
         }
@@ -117,7 +118,6 @@ public class RewardPanelUIManager : PanelBaseUIController
             lastRewardClaimedDate = string.Empty,
             lastRewardClaimedDay = 0,
             isTodayClaimed = false,
-            adsWatchedToday = 0,
             lastActiveDate = string.Empty
         };
 
@@ -134,7 +134,6 @@ public class RewardPanelUIManager : PanelBaseUIController
         if (data.lastActiveDate != today)
         {
             data.lastActiveDate = today;
-            data.adsWatchedToday = 0;
             changed = true;
         }
 
@@ -247,31 +246,25 @@ public class RewardPanelUIManager : PanelBaseUIController
 
     public bool CanWatchAdForRose()
     {
-        ResetDataIfDayPassed();
-        
-        return data != null && maxAdsPerDay > 0 &&
-               data.adsWatchedToday < maxAdsPerDay;
+        int watched = SaveLoadPlayerPrefManager.Instance.GetAdsWatchedToday();
+
+        return maxAdsPerDay > 0 && watched < maxAdsPerDay;
     }
 
     public int GetRemainingAdViews()
     {
-        ResetDataIfDayPassed();
-        
-        if (data == null) 
-            return 0;
-
-        return Mathf.Max(0, maxAdsPerDay - data.adsWatchedToday);
+        int watched = SaveLoadPlayerPrefManager.Instance.GetAdsWatchedToday();
+        return Mathf.Max(0, maxAdsPerDay - watched);
     }
 
     // Call ONLY from the successful rewarded-ad callback.
     public void ClaimRosesAd()
     {
-        if (!CanWatchAdForRose()) 
+        if (!CanWatchAdForRose())
             return;
 
-        data.adsWatchedToday++;
+        SaveLoadPlayerPrefManager.Instance.AddAdsWatchedToday();
         AddRoses(Mathf.Max(0, rosesPerAd));
-        SaveDailyRewardData();
         UpdateButtonsState();
     }
 
@@ -279,6 +272,42 @@ public class RewardPanelUIManager : PanelBaseUIController
     public void ClaimRosesAllowedNoti()
     {
         UpdateButtonsState();
+    }
+
+    public void WatchAdForRose()
+    {
+        if (isWatchingRewardedAd || !CanWatchAdForRose())
+            return;
+
+        if (MaxAdManager.Instance == null ||
+            !MaxAdManager.Instance.IsRewardedReady())
+        {
+            Debug.LogWarning("[DailyReward] Rewarded Ad is not ready.");
+            return;
+        }
+
+        isWatchingRewardedAd = true;
+        UpdateButtonsState();
+
+        bool isShowing = MaxAdManager.Instance.ShowRewarded(
+            onRewarded: () =>
+            {
+                ClaimRosesAd();
+            },
+            onClosed: () =>
+            {
+                isWatchingRewardedAd = false;
+                UpdateButtonsState();
+            }
+        );
+
+        if (!isShowing)
+        {
+            isWatchingRewardedAd = false;
+            UpdateButtonsState();
+
+            Debug.LogWarning("[DailyReward] Failed to show Rewarded Ad.");
+        }
     }
 
     #endregion
@@ -327,14 +356,20 @@ public class RewardPanelUIManager : PanelBaseUIController
 
     private void SetWatchAdButtonState()
     {
-        if (watchAdButton != null)
-            watchAdButton.interactable = data != null && maxAdsPerDay > 0 && data.adsWatchedToday < maxAdsPerDay;
+        if (watchAdButton == null)
+            return;
+
+        watchAdButton.interactable = CanWatchAdForRose() && !isWatchingRewardedAd;
     }
 
     private void SetWatchAdCountText()
     {
-        if (watchAdCount != null)
-            watchAdCount.text = $"({maxAdsPerDay - GetRemainingAdViews()}/{Mathf.Max(0, maxAdsPerDay)})";
+        if (watchAdCount == null)
+            return;
+
+        int watched = SaveLoadPlayerPrefManager.Instance.GetAdsWatchedToday();
+
+        watchAdCount.text = $"({watched}/{Mathf.Max(0, maxAdsPerDay)})";
     }
 
     #endregion

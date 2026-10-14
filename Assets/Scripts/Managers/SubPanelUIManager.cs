@@ -94,7 +94,7 @@ public class SubPanelUIManager : PanelBaseUIController
         // Đợi panel đóng xong rồi mới bật quảng cáo.
         StopAdCoroutines();
 
-        showOpenAdCoroutine = StartCoroutine(ShowOpenAdAfterClose());
+        //showOpenAdCoroutine = StartCoroutine(ShowOpenAdAfterClose());
         showBannerAdCoroutine = StartCoroutine(ShowHideBannerAdDelay(true));
     }
 
@@ -248,8 +248,7 @@ public class SubPanelUIManager : PanelBaseUIController
 
     private void HideBannerAd()
     {
-        // TODO: Tắt Banner Ad khi mở Subscription Panel.
-        // AdManager.Instance.HideBanner();
+        MaxAdManager.Instance?.HideBanner();
     }
 
     private IEnumerator ShowOpenAdAfterClose()
@@ -273,15 +272,14 @@ public class SubPanelUIManager : PanelBaseUIController
             yield break;
         }
 
-        yield return new WaitForSeconds(Mathf.Max(0f, adDelayAfterClose));
+        yield return new WaitForSecondsRealtime(Mathf.Max(0f, adDelayAfterClose));
 
         showBannerAdCoroutine = null;
 
         if (isPanelShown)
             yield break;
 
-        // TODO: Bật lại Banner Ad sau khi đóng Subscription Panel.
-        // AdManager.Instance.ShowBanner();
+        MaxAdManager.Instance?.ShowBanner();
     }
 
     private void StopAdCoroutines()

@@ -4,5 +4,7 @@ public enum PlayerPrefKey
     DailyChatRemain,
     LastOpenAppDate,
     NumberOfRose,
-    Language
+    Language,
+    AdsWatchedToday,
+    LastAdWatchDate
 }
