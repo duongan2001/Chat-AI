@@ -23,7 +23,7 @@ public class CategoryItem : MonoBehaviour
 
     private void Start()
     {
-        ChangeState();
+        //ChangeState();
     }
 
     #endregion
@@ -38,7 +38,8 @@ public class CategoryItem : MonoBehaviour
             Debug.LogWarning("[CategoryItem] Background Image is null.", this);
             return;
         }
-
+        
+        isChosen = !isChosen;
         background.sprite = isChosen ? choosingBackground : normalBackground;
     }
 

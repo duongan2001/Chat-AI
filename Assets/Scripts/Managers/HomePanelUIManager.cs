@@ -64,7 +64,7 @@ public class HomePanelUIManager : PanelBaseUIController
         ShowItemsInHome("All");
 
         //Test
-        Show();
+        //Show();
     }
 
     #endregion

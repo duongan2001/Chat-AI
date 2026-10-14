@@ -1,6 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -38,6 +39,14 @@ public class UIManager : MonoBehaviour
 
     private int currentGeneralButtonId = -1;
 
+    private const string LANGUAGE_KEY = "Language";
+    private const string SETUP_INFO_COMPLETED_KEY = "SetupInfoCompleted";
+
+    private const float IAP_INIT_TIMEOUT = 15f;
+    private Coroutine checkSubscriptionCoroutine;
+
+    private bool hasCheckedVipRewardThisSession;
+
     #endregion
 
 
@@ -62,7 +71,18 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         UpdateRoseAmountUI();
-        SetGeneralButtonStates(HOME_BUTTON_ID);
+        HideGeneralPanels();
+
+        if (!PlayerPrefs.HasKey(LANGUAGE_KEY))
+        {
+            if (languagePanel != null)
+            {
+                languagePanel.Show();
+                return;
+            }
+        }
+
+        ContinueAfterLanguageSelection();
     }
 
     private void Update()
@@ -192,6 +212,8 @@ public class UIManager : MonoBehaviour
 
         if (homePanel != null)
             homePanel.Show();
+
+        CheckDailyVipReward();
     }
 
     private void OpenChatboxPanel()
@@ -231,6 +253,121 @@ public class UIManager : MonoBehaviour
 
         //if (missionPanel != null)
             //missionPanel.Hide();
+    }
+
+    #endregion
+
+
+    #region SETUP INFO METHODS
+
+    public void CompleteSetupInfo()
+    {
+        PlayerPrefs.SetInt(SETUP_INFO_COMPLETED_KEY, 1);
+        PlayerPrefs.Save();
+
+        if (setupInfoPanel != null)
+            setupInfoPanel.Hide();
+
+        HideGeneralPanels();
+
+        if (fakeLoadAiPanel != null)
+            fakeLoadAiPanel.Show();
+        else
+            OnFakeAILoadingCompleted();
+    }
+
+    public void ShowHomeAfterSetup()
+    {
+        OpenHomePanel();
+        SetGeneralButtonStates(HOME_BUTTON_ID);
+    }
+
+    public void ContinueAfterLanguageSelection()
+    {
+        bool isSetupCompleted = PlayerPrefs.GetInt(SETUP_INFO_COMPLETED_KEY, 0) == 1;
+
+        if (isSetupCompleted)
+        {
+            ShowHomeAfterSetup();
+            return;
+        }
+
+        if (setupInfoPanel != null)
+            setupInfoPanel.Show();
+    }
+
+    public void OnFakeAILoadingCompleted()
+    {
+        if (fakeLoadAiPanel != null)
+            fakeLoadAiPanel.Hide();
+
+        if (checkSubscriptionCoroutine != null)
+            StopCoroutine(checkSubscriptionCoroutine);
+
+        checkSubscriptionCoroutine = StartCoroutine(CheckSubscriptionAfterSetup());
+    }
+
+    private IEnumerator CheckSubscriptionAfterSetup()
+    {
+        float elapsed = 0f;
+
+        while ((IAPManager.Instance == null ||
+                !IAPManager.Instance.isInitialized) &&
+               elapsed < IAP_INIT_TIMEOUT)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        checkSubscriptionCoroutine = null;
+
+        if (IAPManager.Instance == null ||
+            !IAPManager.Instance.isInitialized)
+        {
+            Debug.LogWarning("[UIManager] IAP initialization timeout.");
+            ShowHomeAfterSetup();
+            yield break;
+        }
+
+        bool hasSubscription =
+            IAPManager.Instance.isSubscriptionPurchased;
+
+        if (hasSubscription)
+        {
+            ShowHomeAfterSetup();
+        }
+        else if (subPanel != null)
+        {
+            subPanel.Show();
+        }
+        else
+        {
+            ShowHomeAfterSetup();
+        }
+    }
+
+    #endregion
+
+
+    #region VIP REWARD METHODS
+
+    private void CheckDailyVipReward()
+    {
+        if (hasCheckedVipRewardThisSession)
+            return;
+
+        // Chưa có dữ liệu IAP thì chưa đánh dấu đã kiểm tra.
+        if (IAPManager.Instance == null ||
+            !IAPManager.Instance.isInitialized)
+            return;
+
+        hasCheckedVipRewardThisSession = true;
+
+        if (dailyVipRewardPopup == null)
+            return;
+
+        if (dailyVipRewardPopup.CanClaimTodayReward())
+            dailyVipRewardPopup.Show();
     }
 
     #endregion
