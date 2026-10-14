@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using Firebase.Analytics;
+using static MaxSdkBase;
 
 public class MaxAdManager : MonoBehaviour
 {
@@ -110,8 +111,8 @@ public class MaxAdManager : MonoBehaviour
 
         LoadInterstitial();
         LoadRewarded();
-        InitializeBanner();
         LoadAppOpen();
+        ShowBanner();
     }
 
     private void RegisterCallbacks()
@@ -372,10 +373,12 @@ public class MaxAdManager : MonoBehaviour
         if (!isInitialized || bannerCreated || string.IsNullOrEmpty(bannerAdUnitId))
             return;
 
-        MaxSdk.CreateBanner(bannerAdUnitId, MaxSdkBase.BannerPosition.BottomCenter);
-        MaxSdk.SetBannerBackgroundColor(bannerAdUnitId, Color.black);
+        var config = new AdViewConfiguration(AdViewPosition.BottomCenter);
+
+        MaxSdk.CreateBanner(bannerAdUnitId, config);
+        MaxSdk.SetBannerBackgroundColor(bannerAdUnitId, Color.clear);
+
         bannerCreated = true;
-        MaxSdk.ShowBanner(bannerAdUnitId);
     }
 
     public void ShowBanner()
@@ -414,8 +417,19 @@ public class MaxAdManager : MonoBehaviour
 
     private void OnBannerAdLoaded(string adUnitId, MaxSdkBase.AdInfo adInfo)
     {
-        if (bannerCreated && (!bannerWanted || !CanShowForcedAds()))
+        if (adUnitId != bannerAdUnitId)
+            return;
+
+        Debug.Log("[MAX] Banner loaded.");
+
+        if (bannerWanted && CanShowForcedAds())
+        {
+            MaxSdk.ShowBanner(bannerAdUnitId);
+        }
+        else
+        {
             MaxSdk.HideBanner(bannerAdUnitId);
+        }
     }
 
     private void OnBannerAdLoadFailed(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
