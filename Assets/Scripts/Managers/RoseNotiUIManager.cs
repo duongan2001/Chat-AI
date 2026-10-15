@@ -22,6 +22,10 @@ public class RoseNotiUIManager : PanelBaseUIController
 
     private bool isWatchingRewardedAd;
 
+    [Header("--- ROSE EFFECT POINTS ---")]
+    [SerializeField] private RectTransform adRewardRosePoint;
+    [SerializeField] private RectTransform roseBalancePoint;
+
     #endregion
 
 
@@ -220,7 +224,14 @@ public class RoseNotiUIManager : PanelBaseUIController
         {
             if (UIManager.Instance != null)
             {
-                UIManager.Instance.UpdateRoseAmount(amount);
+                if (adRewardRosePoint != null && roseBalancePoint != null)
+                {
+                    UIManager.Instance.UpdateRoseAmount(amount, adRewardRosePoint, roseBalancePoint);
+                }
+                else
+                {
+                    UIManager.Instance.UpdateRoseAmount(amount);
+                }
             }
             else
             {

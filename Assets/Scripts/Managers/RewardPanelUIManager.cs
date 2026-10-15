@@ -25,6 +25,11 @@ public class RewardPanelUIManager : PanelBaseUIController
 
     private bool isWatchingRewardedAd;
     public bool IsWatchingRewardedAd => isWatchingRewardedAd;
+
+    [Header("--- ROSE EFFECT POINTS ---")]
+    [SerializeField] private RectTransform[] dailyRewardRosePoints;
+    [SerializeField] private RectTransform adRewardRosePoint;
+    [SerializeField] private RectTransform roseBalancePoint;
     #endregion
 
     #region UNITY METHODS
@@ -193,6 +198,14 @@ public class RewardPanelUIManager : PanelBaseUIController
         if (rewardItem == null) return;
 
         int amount = Mathf.Max(0, rewardItem.Amount);
+        
+        RectTransform startPoint = null;
+
+        if (dailyRewardRosePoints != null && lastRewardDay < dailyRewardRosePoints.Length)
+        {
+            startPoint = dailyRewardRosePoints[lastRewardDay];
+        }
+
         AddRoses(amount);
 
         data.lastRewardClaimedDay = lastRewardDay + 1;
@@ -264,7 +277,9 @@ public class RewardPanelUIManager : PanelBaseUIController
             return;
 
         SaveLoadPlayerPrefManager.Instance.AddAdsWatchedToday();
-        AddRoses(Mathf.Max(0, rosesPerAd));
+
+        AddRoses(Mathf.Max(0, rosesPerAd), adRewardRosePoint);
+
         UpdateButtonsState();
     }
 
@@ -314,18 +329,27 @@ public class RewardPanelUIManager : PanelBaseUIController
 
     #region ROSE METHODS
 
-    private void AddRoses(int amount)
+    private void AddRoses(int amount, RectTransform startPoint = null)
     {
-        if (amount <= 0) return;
+        if (amount <= 0)
+            return;
 
         if (UIManager.Instance != null)
         {
-            UIManager.Instance.UpdateRoseAmount(amount);
+            if (startPoint != null && roseBalancePoint != null)
+            {
+                UIManager.Instance.UpdateRoseAmount(amount, startPoint, roseBalancePoint);
+            }
+            else
+            {
+                UIManager.Instance.UpdateRoseAmount(amount);
+            }
         }
         else
         {
             string key = PlayerPrefKey.NumberOfRose.ToString();
             int current = PlayerPrefs.GetInt(key, 0);
+
             PlayerPrefs.SetInt(key, current > int.MaxValue - amount ? int.MaxValue : current + amount);
             PlayerPrefs.Save();
         }
@@ -370,6 +394,40 @@ public class RewardPanelUIManager : PanelBaseUIController
         int watched = SaveLoadPlayerPrefManager.Instance.GetAdsWatchedToday();
 
         watchAdCount.text = $"({watched}/{Mathf.Max(0, maxAdsPerDay)})";
+    }
+
+    #endregion
+
+
+    #region ROSE EFFECT TEST METHODS
+
+    [ContextMenu("Test Daily Reward Rose Effect")]
+    public void TestDailyRewardRoseEffect()
+    {
+        int dayIndex = GetRewardDay();
+
+        if (dailyRewardRosePoints == null ||
+            dayIndex < 0 ||
+            dayIndex >= dailyRewardRosePoints.Length)
+            return;
+
+        RectTransform startPoint = dailyRewardRosePoints[dayIndex];
+
+        if (UIManager.Instance != null)
+        {
+            Debug.Log("Test Daily Reward Rose Effect");
+            UIManager.Instance.PlayRoseBurstEffect(startPoint, roseBalancePoint);
+        }
+    }
+
+    [ContextMenu("Test Ad Reward Rose Effect")]
+    public void TestAdRewardRoseEffect()
+    {
+        if (UIManager.Instance != null)
+        {
+            Debug.Log("Test Ad Reward Rose Effect");
+            UIManager.Instance.PlayRoseBurstEffect(adRewardRosePoint, roseBalancePoint);
+        }
     }
 
     #endregion

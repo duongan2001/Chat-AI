@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public FakeLoadAIUIManager fakeLoadAiPanel;
     public HomePanelUIManager homePanel;
     public LanguagePanelUIManager languagePanel;
+    public PhotoViewPopupUIManager photoViewPopup;
     public RewardPanelUIManager rewardPanel;
     public RoseNotiUIManager roseNotiPopup;
     public ShopPanelUIManager roseShopPanel;
@@ -24,6 +25,7 @@ public class UIManager : MonoBehaviour
     public SetupInfoPanelUIManager setupInfoPanel;
     public SubPanelUIManager subPanel;
     public UnlockCharacterPanelUIManager unlockCharacterPopup;
+    public UnlockPhotoPopupUIManager unlockPhotoPopup;
 
     [Header("--- GENERAL BUTTONS ---")]
     [SerializeField] private Image[] generalButtonOnStateIcons;
@@ -31,6 +33,16 @@ public class UIManager : MonoBehaviour
 
     [Header("--- ROSE AMOUNT ---")]
     [SerializeField] private Text[] roseAmountTexts;
+
+    [Header("--- ROSE BURST EFFECT ---")]
+    [SerializeField] private RectTransform roseEffectContainer;
+    [SerializeField] private Sprite roseEffectSprite;
+
+    [SerializeField] private int roseParticleCount = 8;
+    [SerializeField] private float roseParticleSize = 120f;
+    [SerializeField] private float roseBurstRadius = 120f;
+    [SerializeField] private float roseBurstDuration = 0.5f;
+    [SerializeField] private float roseFlyDuration = 2f;
 
     private const int HOME_BUTTON_ID = 0;
     private const int REWARD_BUTTON_ID = 1;
@@ -118,6 +130,16 @@ public class UIManager : MonoBehaviour
         UpdateRoseAmountUI();
     }
 
+    public void UpdateRoseAmount(int amount, RectTransform startPoint, RectTransform endPoint)
+    {
+        UpdateRoseAmount(amount);
+
+        if (amount > 0)
+        {
+            PlayRoseBurstEffect(startPoint, endPoint);
+        }
+    }
+
     public void UpdateRoseAmountUI()
     {
         string key = PlayerPrefKey.NumberOfRose.ToString();
@@ -132,6 +154,156 @@ public class UIManager : MonoBehaviour
             if (roseAmountTexts[i] != null)
                 roseAmountTexts[i].text = amount.ToString();
         }
+    }
+
+    #endregion
+
+
+    #region ROSE EFFECT METHODS
+
+    public void PlayRoseBurstEffect(RectTransform startPoint, RectTransform endPoint)
+    {
+        if (roseEffectContainer == null ||
+            roseEffectSprite == null ||
+            startPoint == null ||
+            endPoint == null)
+        {
+            Debug.LogWarning("[UIManager] Rose effect references are missing.");
+            return;
+        }
+
+        Vector2 startPosition = GetRoseEffectLocalPosition(startPoint);
+        Vector2 endPosition = GetRoseEffectLocalPosition(endPoint);
+
+        int count = Mathf.Max(0, roseParticleCount);
+
+        for (int i = 0; i < count; i++)
+        {
+            GameObject roseObject = new GameObject("Rose Particle", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+
+            roseObject.transform.SetParent(roseEffectContainer, false);
+
+            RectTransform rect = roseObject.GetComponent<RectTransform>();
+
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+
+            rect.sizeDelta = Vector2.one * roseParticleSize;
+            rect.anchoredPosition = startPosition;
+
+            Image image = roseObject.GetComponent<Image>();
+
+            image.sprite = roseEffectSprite;
+            image.preserveAspect = true;
+            image.raycastTarget = false;
+
+            StartCoroutine(AnimateRoseParticle(rect, image, startPosition, endPosition));
+        }
+    }
+
+    private Vector2 GetRoseEffectLocalPosition(RectTransform target)
+    {
+        Canvas canvas = roseEffectContainer.GetComponentInParent<Canvas>();
+        Canvas rootCanvas = canvas != null ? canvas.rootCanvas : null;
+
+        Camera camera = null;
+
+        if (rootCanvas != null &&
+            rootCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
+        {
+            camera = rootCanvas.worldCamera;
+        }
+
+        Vector2 screenPosition = RectTransformUtility.WorldToScreenPoint(camera, target.position);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(roseEffectContainer, screenPosition, camera, out Vector2 localPosition);
+
+        return localPosition;
+    }
+
+    private IEnumerator AnimateRoseParticle(RectTransform rect, Image image, Vector2 startPosition, Vector2 endPosition)
+    {
+        float burstDuration = Mathf.Max(0.01f, roseBurstDuration);
+        float flyDuration = Mathf.Max(0.01f, roseFlyDuration);
+
+        float angle = Random.Range(0f, Mathf.PI * 2f);
+        float radius = Random.Range(roseBurstRadius * 0.5f, roseBurstRadius);
+
+        Vector2 burstOffset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+
+        Vector2 burstPosition = startPosition + burstOffset;
+
+        float randomRotation = Random.Range(-180f, 180f);
+
+        rect.anchoredPosition = startPosition;
+        rect.localScale = Vector3.zero;
+
+        Color color = image.color;
+        color.a = 1f;
+        image.color = color;
+
+        // PHASE 1: BURST + SCALE 0 -> 1
+        float elapsed = 0f;
+
+        while (elapsed < burstDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+
+            float t = Mathf.Clamp01(elapsed / burstDuration);
+
+            // Burst movement: Ease Out Cubic.
+            float moveT = 1f - Mathf.Pow(1f - t, 3f);
+
+            rect.anchoredPosition = Vector2.Lerp(startPosition, burstPosition, moveT);
+
+            // Scale: Ease Out Back, slightly overshoots 1.
+            float c1 = 1.70158f;
+            float c3 = c1 + 1f;
+
+            float scaleT = 1f + c3 * Mathf.Pow(t - 1f, 3f) + c1 * Mathf.Pow(t - 1f, 2f);
+
+            rect.localScale = Vector3.one * scaleT;
+
+            yield return null;
+        }
+
+        // Ensure burst is fully completed before flying.
+        rect.anchoredPosition = burstPosition;
+        rect.localScale = Vector3.one;
+
+        // PHASE 2: FLY TO END POINT
+        elapsed = 0f;
+
+        while (elapsed < flyDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+
+            float t = Mathf.Clamp01(elapsed / flyDuration);
+
+            // Smooth movement.
+            float flyT = t * t * (3f - 2f * t);
+
+            rect.anchoredPosition = Vector2.Lerp(burstPosition, endPosition, flyT);
+
+            // Rotate while flying.
+            rect.localRotation = Quaternion.Euler(0f, 0f, randomRotation * t);
+
+            // Scale 1 -> 0.1.
+            float scale = Mathf.Lerp(1f, 0.5f, t);
+            rect.localScale = Vector3.one * scale;
+
+            // Fade out near the destination.
+            color = image.color;
+            color.a = t < 0.75f ? 1f : Mathf.Lerp(1f, 0f, (t - 0.75f) / 0.25f);
+
+            image.color = color;
+
+            yield return null;
+        }
+
+        if (rect != null)
+            Destroy(rect.gameObject);
     }
 
     #endregion
@@ -329,8 +501,7 @@ public class UIManager : MonoBehaviour
             yield break;
         }
 
-        bool hasSubscription =
-            IAPManager.Instance.isSubscriptionPurchased;
+        bool hasSubscription = IAPManager.Instance.isSubscriptionPurchased;
 
         if (hasSubscription)
         {

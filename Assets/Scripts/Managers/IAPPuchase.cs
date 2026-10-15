@@ -115,6 +115,13 @@ public class IAPPuchase : MonoBehaviour
         if (UIManager.Instance != null)
         {
             UIManager.Instance.UpdateRoseAmount(roseAmount);
+
+            int packageIndex = GetRosePackageIndex(purchasedId);
+
+            if (packageIndex >= 0 && UIManager.Instance.roseShopPanel != null)
+            {
+                UIManager.Instance.roseShopPanel.PlayRosePurchaseEffect(packageIndex);
+            }
         }
         else
         {
@@ -140,6 +147,20 @@ public class IAPPuchase : MonoBehaviour
             case "buy_rose_2000": return 2000 + 400;
             case "buy_rose_4000": return 4000 + 1200;
             default: return 0;
+        }
+    }
+
+    private int GetRosePackageIndex(string id)
+    {
+        switch (id)
+        {
+            case "buy_rose_4000": return 0;
+            case "buy_rose_2000": return 1;
+            case "buy_rose_1000": return 2;
+            case "buy_rose_500": return 3;
+            case "buy_rose_200": return 4;
+            case "buy_rose_100": return 5;
+            default: return -1;
         }
     }
 

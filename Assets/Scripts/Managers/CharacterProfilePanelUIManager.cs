@@ -43,7 +43,7 @@ public class CharacterProfilePanelUIManager : PanelBaseUIController
     [SerializeField] private RectTransform characterPhotoContainer;
     [SerializeField] private GameObject characterPhotoPrefab;
 
-    private readonly List<GameObject> spawnedPhotoItems = new List<GameObject>();
+    private readonly List<CharaterPhoto> spawnedPhotoItems = new List<CharaterPhoto>();
 
     private const int NEW_CHARACTER_COUNT = 6;
     private const float PHOTO_CHECK_INTERVAL = 1f;
@@ -305,38 +305,62 @@ public class CharacterProfilePanelUIManager : PanelBaseUIController
             return;
         }
 
+        characterData.SetListPhotoNumberOfElement();
+
         int photoCount = Mathf.Max(0, characterData.numberOfPhoto);
 
         for (int i = 0; i < photoCount; i++)
         {
-            GameObject photoItem = Instantiate(characterPhotoPrefab, characterPhotoContainer);
+            GameObject photoObject = Instantiate(characterPhotoPrefab, characterPhotoContainer);
 
-            photoItem.SetActive(true);
+            CharaterPhoto photoItem = photoObject.GetComponent<CharaterPhoto>();
+
+            if (photoItem == null)
+            {
+                Debug.LogWarning("[CharacterProfile] Character photo prefab missing CharaterPhoto component.");
+
+                Destroy(photoObject);
+                continue;
+            }
+
+            photoItem.SetCharacterData(characterData);
+            photoItem.SetPhotoId(i);
 
             spawnedPhotoItems.Add(photoItem);
 
-            // The photo item must have an Image component.
-            Image photoImage = photoItem.GetComponent<Image>();
+            photoObject.SetActive(true);
+            photoItem.SetPhoto();
+        }
+    }
 
-            if (photoImage == null)
-                photoImage = photoItem.GetComponentInChildren<Image>();
+    public void RefreshCharacterPhotoList()
+    {
+        if (characterData == null)
+            return;
 
-            if (photoImage == null)
+        if (spawnedPhotoItems.Count != characterData.numberOfPhoto)
+        {
+            LoadCharacterPhotoList();
+            return;
+        }
+
+        foreach (CharaterPhoto photoItem in spawnedPhotoItems)
+        {
+            if (photoItem == null)
                 continue;
 
-            Sprite sprite = GetPhotoSprite(i);
-
-            photoImage.sprite = sprite;
-            photoImage.enabled = sprite != null;
+            photoItem.SetPhoto();
         }
     }
 
     private void ClearCharacterPhotoList()
     {
-        for (int i = 0; i < spawnedPhotoItems.Count; i++)
+        foreach (CharaterPhoto photoItem in spawnedPhotoItems)
         {
-            if (spawnedPhotoItems[i] != null)
-                Destroy(spawnedPhotoItems[i]);
+            if (photoItem != null)
+            {
+                Destroy(photoItem.gameObject);
+            }
         }
 
         spawnedPhotoItems.Clear();
@@ -357,7 +381,8 @@ public class CharacterProfilePanelUIManager : PanelBaseUIController
         SetCharacterDescription();
         SetCharacterTags();
         SetCharacterImages();
-        LoadCharacterPhotoList();
+
+        RefreshCharacterPhotoList();
     }
 
     public override void Hide()
@@ -369,6 +394,8 @@ public class CharacterProfilePanelUIManager : PanelBaseUIController
     public override void ShowDelay()
     {
         base.ShowDelay();
+
+        RefreshCharacterPhotoList();
     }
 
     #endregion

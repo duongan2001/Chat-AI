@@ -307,12 +307,7 @@ public class CharacterDataSO : ScriptableObject
         {
             byte[] imageBytes = File.ReadAllBytes(path);
 
-            Texture2D texture = new Texture2D(
-                2,
-                2,
-                TextureFormat.RGBA32,
-                false
-            );
+            Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
 
             if (!ImageConversion.LoadImage(texture, imageBytes))
             {
@@ -322,17 +317,11 @@ public class CharacterDataSO : ScriptableObject
 
             SetListPhotoNumberOfElement();
 
-            photoSprites[id] = Sprite.Create(
-                texture,
-                new Rect(0, 0, texture.width, texture.height),
-                new Vector2(0.5f, 0.5f)
-            );
+            photoSprites[id] = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
         catch (Exception e)
         {
-            Debug.LogError(
-                $"[CharacterDataSO] Failed to load photo: {e.Message}"
-            );
+            Debug.LogError($"[CharacterDataSO] Failed to load photo: {e.Message}");
         }
     }
 
