@@ -69,6 +69,8 @@ public class CharacterPhotoManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     #endregion

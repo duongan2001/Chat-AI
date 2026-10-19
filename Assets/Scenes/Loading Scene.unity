@@ -1154,6 +1154,72 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1193613197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1193613199}
+  - component: {fileID: 1193613198}
+  m_Layer: 0
+  m_Name: Character Photo Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1193613198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193613197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce4ad396d6b4e0a4981b9b7c3854af06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterDatas:
+  - {fileID: 11400000, guid: c36db5490ffea584eb09da6432a266e1, type: 2}
+  - {fileID: 11400000, guid: 3a0e8c7c02a12b449b32f969d3f43635, type: 2}
+  - {fileID: 11400000, guid: 889f0d35ec2cef1468fe32f1f05e9fe1, type: 2}
+  - {fileID: 11400000, guid: b2799a73090f159458d509c0b52cc07e, type: 2}
+  - {fileID: 11400000, guid: a7fa49b57dabfdf4f85ed36c9ec93427, type: 2}
+  - {fileID: 11400000, guid: b5e204702d66c7449a3f013221b7b56d, type: 2}
+  - {fileID: 11400000, guid: 185d14e7a02ca104eb676d7c3928b9c3, type: 2}
+  - {fileID: 11400000, guid: cee23d9ea892bc84fb707bd868bbce3e, type: 2}
+  - {fileID: 11400000, guid: e38d837f9f8073b42ad54e5c50576602, type: 2}
+  - {fileID: 11400000, guid: 038c744645d68d94c829443e5641e164, type: 2}
+  - {fileID: 11400000, guid: fd2194b5244016d4b9b00824ac9d2213, type: 2}
+  - {fileID: 11400000, guid: 7da528f77783bc94fb226324caa1776b, type: 2}
+  - {fileID: 11400000, guid: 6203823d9fed4364aa551dcd79193717, type: 2}
+  - {fileID: 11400000, guid: 00685abee4950ce4baf1a82cc0bde55c, type: 2}
+  - {fileID: 11400000, guid: ce5efe5ebfdeca4478556438c483bb9e, type: 2}
+  - {fileID: 11400000, guid: f7311729e93a55d4383210c9e103492e, type: 2}
+  - {fileID: 11400000, guid: 355a09eb4eb5d514a9fc8409b6c9964e, type: 2}
+  - {fileID: 11400000, guid: 8c0a79d1de0f16d4cabe42fc35fd6587, type: 2}
+  - {fileID: 11400000, guid: c81ab60b08470a44d8deeb03732d3433, type: 2}
+  - {fileID: 11400000, guid: 7abf5a291be82a5448d73823c99567eb, type: 2}
+  characterPhotoJsonUrl: https://drive.google.com/uc?export=download&id=19fYxAlNzZBI_sHO67cviOL1TfqGjnOd3
+--- !u!4 &1193613199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193613197}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1280401562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1217,6 +1283,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 26}
   - {fileID: 19}
+  - {fileID: 1193613199}
   - {fileID: 24}
   - {fileID: 18}
   - {fileID: 1280401562}

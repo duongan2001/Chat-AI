@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public FakeLoadAIUIManager fakeLoadAiPanel;
     public HomePanelUIManager homePanel;
     public LanguagePanelUIManager languagePanel;
+    public MissionPanelUIManager missionPanel;
     public PhotoViewPopupUIManager photoViewPopup;
     public RandomChatNotiPopupUIManager randomChatNotiPopup;
     public RewardPanelUIManager rewardPanel;
@@ -409,8 +410,8 @@ public class UIManager : MonoBehaviour
     {
         HideGeneralPanels();
 
-        //if (missionPanel != null)
-            //missionPanel.Show();
+        if (missionPanel != null)
+            missionPanel.Show();
     }
 
     private void HideGeneralPanels()
@@ -424,8 +425,8 @@ public class UIManager : MonoBehaviour
         if (rewardPanel != null)
             rewardPanel.Hide();
 
-        //if (missionPanel != null)
-            //missionPanel.Hide();
+        if (missionPanel != null)
+            missionPanel.Hide();
     }
 
     #endregion

@@ -217,7 +217,7 @@ public class CharacterDataSO : ScriptableObject
     {
         if (!IsValidPhotoId(id))
         {
-            Debug.LogWarning($"[CharacterDataSO] Invalid photo ID: {id}");
+            Debug.LogError($"[PHOTO DOWNLOAD FAILED] Character: {characterName} | Photo ID: {id} | Invalid photo ID.");
             yield break;
         }
 
@@ -233,11 +233,15 @@ public class CharacterDataSO : ScriptableObject
             id >= photoUrls.Length ||
             string.IsNullOrWhiteSpace(photoUrls[id]))
         {
-            Debug.LogWarning($"[CharacterDataSO] Photo URL not found: {id}");
+            Debug.LogError($"[PHOTO DOWNLOAD FAILED] Character: {characterName} | Photo ID: {id} | Photo URL not found.");
             yield break;
         }
 
-        using (UnityWebRequest request = UnityWebRequest.Get(photoUrls[id]))
+        string photoUrl = photoUrls[id];
+
+        Debug.Log($"[PHOTO DOWNLOAD START] Character: {characterName} | Photo ID: {id} | URL: {photoUrl}");
+
+        using (UnityWebRequest request = UnityWebRequest.Get(photoUrl))
         {
             request.timeout = 30;
 
@@ -245,7 +249,10 @@ public class CharacterDataSO : ScriptableObject
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[CharacterDataSO] Download failed: {request.error}");
+                Debug.LogError(
+                    $"[PHOTO DOWNLOAD FAILED] Character: {characterName} | Photo ID: {id} | " +
+                    $"HTTP: {request.responseCode} | Error: {request.error} | URL: {photoUrl}"
+                );
                 yield break;
             }
 
@@ -253,7 +260,7 @@ public class CharacterDataSO : ScriptableObject
 
             if (imageBytes == null || imageBytes.Length == 0)
             {
-                Debug.LogError("[CharacterDataSO] Downloaded image is empty.");
+                Debug.LogError($"[PHOTO DOWNLOAD FAILED] Character: {characterName} | Photo ID: {id} | Empty image data.");
                 yield break;
             }
 
@@ -263,21 +270,28 @@ public class CharacterDataSO : ScriptableObject
             {
                 Destroy(texture);
 
-                Debug.LogError("[CharacterDataSO] Invalid image data.");
+                Debug.LogError(
+                    $"[PHOTO DOWNLOAD FAILED] Character: {characterName} | Photo ID: {id} | " +
+                    $"Invalid image data | Content-Type: {request.GetResponseHeader("Content-Type")}"
+                );
                 yield break;
             }
+
+            string savePath = GetPhotoPath(id);
 
             try
             {
                 Directory.CreateDirectory(PhotoDirectory);
-
-                File.WriteAllBytes(GetPhotoPath(id), imageBytes);
+                File.WriteAllBytes(savePath, imageBytes);
             }
             catch (Exception e)
             {
-                Debug.LogError($"[CharacterDataSO] Failed to save photo: {e.Message}");
-
                 Destroy(texture);
+
+                Debug.LogError(
+                    $"[PHOTO DOWNLOAD FAILED] Character: {characterName} | Photo ID: {id} | " +
+                    $"Save error: {e.Message} | Path: {savePath}"
+                );
                 yield break;
             }
 
@@ -286,6 +300,12 @@ public class CharacterDataSO : ScriptableObject
                 new Rect(0, 0, texture.width, texture.height),
                 new Vector2(0.5f, 0.5f)
             );
+
+            Debug.Log(
+                $"[PHOTO DOWNLOAD SUCCESS] Character: {characterName} | Photo ID: {id} | " +
+                $"Resolution: {texture.width}x{texture.height} | " +
+                $"Size: {imageBytes.Length / 1024f:F1} KB | Path: {savePath}"
+            );
         }
     }
 
@@ -293,6 +313,7 @@ public class CharacterDataSO : ScriptableObject
     {
         if (!IsValidPhotoId(id))
         {
+            Debug.LogError($"[PHOTO LOAD FAILED] Character: {characterName} | Photo ID: {id} | Invalid photo ID.");
             return;
         }
 
@@ -300,6 +321,9 @@ public class CharacterDataSO : ScriptableObject
 
         if (!File.Exists(path))
         {
+            Debug.LogWarning(
+                $"[PHOTO LOAD FAILED] Character: {characterName} | Photo ID: {id} | File not found: {path}"
+            );
             return;
         }
 
@@ -312,16 +336,31 @@ public class CharacterDataSO : ScriptableObject
             if (!ImageConversion.LoadImage(texture, imageBytes))
             {
                 Destroy(texture);
+
+                Debug.LogError(
+                    $"[PHOTO LOAD FAILED] Character: {characterName} | Photo ID: {id} | Invalid cached image: {path}"
+                );
                 return;
             }
 
             SetListPhotoNumberOfElement();
 
-            photoSprites[id] = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            photoSprites[id] = Sprite.Create(
+                texture,
+                new Rect(0, 0, texture.width, texture.height),
+                new Vector2(0.5f, 0.5f)
+            );
+
+            Debug.Log(
+                $"[PHOTO LOAD SUCCESS] Character: {characterName} | Photo ID: {id} | " +
+                $"Resolution: {texture.width}x{texture.height} | Path: {path}"
+            );
         }
         catch (Exception e)
         {
-            Debug.LogError($"[CharacterDataSO] Failed to load photo: {e.Message}");
+            Debug.LogError(
+                $"[PHOTO LOAD FAILED] Character: {characterName} | Photo ID: {id} | Error: {e.Message}"
+            );
         }
     }
 
