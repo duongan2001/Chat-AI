@@ -462,6 +462,79 @@ public class HomePanelUIManager : PanelBaseUIController
     #endregion
 
 
+    #region RANDOM CHAT METHODS
+
+    public void RandomChat()
+    {
+        // Check VIP subscription.
+        bool hasVIP = IAPManager.Instance != null &&
+                      IAPManager.Instance.isSubscriptionPurchased;
+
+        if (!hasVIP)
+        {
+            if (UIManager.Instance.randomChatNotiPopup != null)
+            {
+                UIManager.Instance.randomChatNotiPopup.Show();
+            }
+            else
+            {
+                Debug.LogWarning("[Home] Random Chat Noti Popup is null.");
+            }
+
+            return;
+        }
+
+        // Initialize character data if needed.
+        if (characterDatas == null || characterDatas.Length == 0)
+        {
+            InitializeCharacterData();
+        }
+
+        if (characterDatas == null || characterDatas.Length == 0)
+        {
+            Debug.LogWarning("[Home] No characters available.");
+            return;
+        }
+
+        // Collect valid characters.
+        List<int> availableIds = new List<int>();
+
+        for (int i = 0; i < characterDatas.Length; i++)
+        {
+            if (IsValidCharacterIndex(i))
+            {
+                availableIds.Add(i);
+            }
+        }
+
+        if (availableIds.Count == 0)
+        {
+            Debug.LogWarning("[Home] No valid characters found.");
+            return;
+        }
+
+        // Pick a random character.
+        int randomIndex = UnityEngine.Random.Range(0, availableIds.Count);
+        int characterId = availableIds[randomIndex];
+
+        CharacterDataSO randomCharacter = characterDatas[characterId];
+
+        if (UIManager.Instance.characterProfilePanel == null)
+        {
+            Debug.LogWarning("[Home] Character Profile Panel is null.");
+            return;
+        }
+
+        // Open random character profile.
+        UIManager.Instance.characterProfilePanel.SetCharacterData(randomCharacter);
+        UIManager.Instance.characterProfilePanel.Show();
+
+        Debug.Log($"[Home] Random Chat: {randomCharacter.characterName}");
+    }
+
+    #endregion
+
+
     #region PANEL METHODS
 
     public override void Show()

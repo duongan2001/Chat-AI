@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public HomePanelUIManager homePanel;
     public LanguagePanelUIManager languagePanel;
     public PhotoViewPopupUIManager photoViewPopup;
+    public RandomChatNotiPopupUIManager randomChatNotiPopup;
     public RewardPanelUIManager rewardPanel;
     public RoseNotiUIManager roseNotiPopup;
     public ShopPanelUIManager roseShopPanel;
