@@ -258,7 +258,7 @@ public class CharacterProfilePanelUIManager : PanelBaseUIController
         if (shortDescriptionText == null)
             return;
 
-        shortDescriptionText.text = characterData != null ? characterData.GetShortDescription() : string.Empty;
+        shortDescriptionText.text = characterData != null ? characterData.GetRelationshipGoalString() : string.Empty;
     }
 
     #endregion

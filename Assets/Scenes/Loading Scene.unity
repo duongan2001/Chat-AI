@@ -806,7 +806,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18400f32f3e6ec8498da11b30aa7d62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  translatedValueList: []
+  translatedValueList:
+  - Loading
+  - "\u0110ang t\u1EA3i"
+  - "\u0E01\u0E33\u0E25\u0E31\u0E07\u0E42\u0E2B\u0E25\u0E14"
+  - "\u30ED\u30FC\u30C9\u4E2D"
+  - "\uB85C\uB529 \uC911"
+  - "\u0932\u094B\u0921 \u0939\u094B \u0930\u0939\u093E \u0939\u0948"
+  - Memuat
+  - Memuatkan
+  - Cargando
+  - Carregando
+  - "\u52A0\u8F7D\u4E2D"
+  - "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430"
   targetText: {fileID: 0}
 --- !u!114 &47
 MonoBehaviour:
@@ -904,7 +916,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7abf5a291be82a5448d73823c99567eb, type: 2}
   saveLockData:
     isLocked: 
-  defaultUnlockedIndexes: 
+  defaultUnlockedIndexes: 0000000001000000
 --- !u!114 &51
 MonoBehaviour:
   m_ObjectHideFlags: 0

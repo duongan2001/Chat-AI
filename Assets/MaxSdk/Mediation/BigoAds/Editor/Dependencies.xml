@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dependencies>
+    <androidPackages>
+        <androidPackage spec="com.applovin.mediation:bigoads-adapter:6.1.0.0" />
+    </androidPackages>
+    <iosPods>
+        <iosPod name="AppLovinMediationBigoAdsAdapter" version="6.1.0.1" />
+    </iosPods>
+    <remoteSwiftPackage url="https://github.com/AppLovin/AppLovin-MAX-Swift-Package-BigoAds.git" version="6010001.0.0">
+        <swiftPackage name="AppLovinMediationBigoAdsAdapter" replacesPod="AppLovinMediationBigoAdsAdapter" target="All" />
+    </remoteSwiftPackage>
+</dependencies>

@@ -203,6 +203,8 @@ public class ChatboxItem : MonoBehaviour
 
     public void OnChatboxButtonClick()
     {
+        SoundManager.Instance.PlaySFX(1);
+
         if (characterDataIndex < 0)
         {
             Debug.LogWarning("[ChatboxItem] Invalid character index.");

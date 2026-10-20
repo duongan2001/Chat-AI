@@ -1,6 +1,18 @@
 using UnityEngine;
 
-public class Sound : MonoBehaviour
+[System.Serializable]
+public class Sound
 {
-	//Dummy class. Use different settings or provide .NET dll files for better decompilation output
+    public string name;
+    public AudioClip clip;
+
+    [Range(0f, 1f)]
+    public float volume;
+    [Range(.1f, 3f)]
+    public float pitch;
+
+    public bool loop;
+
+    [HideInInspector]
+    public AudioSource source;
 }

@@ -483,40 +483,23 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator CheckSubscriptionAfterSetup()
     {
-        float elapsed = 0f;
-
-        while ((IAPManager.Instance == null ||
-                !IAPManager.Instance.isInitialized) &&
-               elapsed < IAP_INIT_TIMEOUT)
-        {
-            elapsed += Time.unscaledDeltaTime;
-            yield return null;
-        }
-
         checkSubscriptionCoroutine = null;
 
         if (IAPManager.Instance == null ||
-            !IAPManager.Instance.isInitialized)
+            !IAPManager.Instance.isInitialized ||
+            !IAPManager.Instance.isSubscriptionPurchased)
         {
-            Debug.LogWarning("[UIManager] IAP initialization timeout.");
-            ShowHomeAfterSetup();
-            yield break;
-        }
-
-        bool hasSubscription = IAPManager.Instance.isSubscriptionPurchased;
-
-        if (hasSubscription)
-        {
-            ShowHomeAfterSetup();
-        }
-        else if (subPanel != null)
-        {
-            subPanel.Show();
+            if (subPanel != null)
+                subPanel.Show();
+            else
+                ShowHomeAfterSetup();
         }
         else
         {
             ShowHomeAfterSetup();
         }
+
+        yield break;
     }
 
     private void CheckSubscriptionOnStartup()

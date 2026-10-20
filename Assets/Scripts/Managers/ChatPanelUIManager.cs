@@ -508,6 +508,11 @@ public class ChatPanelUIManager : PanelBaseUIController
 
         GameObject bubble = Instantiate(prefab, chatMessageContents.transform);
 
+        if (!message.isMessageFromUser)
+        {
+            SoundManager.Instance?.PlaySFX(1);
+        }
+
         if (message.messageType == MessageType.text)
         {
             SetBubbleText(bubble, message.GetMessageTextContent());

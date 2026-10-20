@@ -105,6 +105,8 @@ public class CharaterPhoto : MonoBehaviour
 
     public void OnPhotoClick()
     {
+        SoundManager.Instance.PlaySFX(1);
+
         if (characterDataSO == null)
             return;
 
@@ -126,6 +128,8 @@ public class CharaterPhoto : MonoBehaviour
 
     public void OnCensorEffectClick()
     {
+        SoundManager.Instance.PlaySFX(1);
+
         if (characterDataSO == null)
             return;
 

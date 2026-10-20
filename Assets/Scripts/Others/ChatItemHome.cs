@@ -298,6 +298,7 @@ public class ChatItemHome : MonoBehaviour
     public void OnChatItemClick()
     {
         //Sound
+        SoundManager.Instance.PlaySFX(1);
 
         if (characterData == null || UIManager.Instance == null)
             return;
