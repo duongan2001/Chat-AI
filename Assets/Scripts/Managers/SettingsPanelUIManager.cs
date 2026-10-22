@@ -179,8 +179,7 @@ public class SettingsPanelUIManager : PanelBaseUIController
 
         if (MultiLanguageManager.Instance != null)
         {
-            languageIndex =
-                MultiLanguageManager.Instance.GetCurrentLanguageId();
+            languageIndex = MultiLanguageManager.Instance.GetCurrentLanguageId();
         }
 
         if (languageIndex < 0 ||

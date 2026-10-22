@@ -97,6 +97,8 @@ public class UIManager : MonoBehaviour
         }
 
         ContinueAfterLanguageSelection();
+
+        Debug.Log("App vesion: " + Application.version);
     }
 
     private void Update()
@@ -318,34 +320,65 @@ public class UIManager : MonoBehaviour
         if (string.IsNullOrWhiteSpace(button))
             return;
 
+        int targetButtonId;
+
         switch (button.Trim().ToLowerInvariant())
         {
             case "home":
-                OpenHomePanel();
-                SetGeneralButtonStates(HOME_BUTTON_ID);
+                targetButtonId = HOME_BUTTON_ID;
                 break;
 
             case "chat":
             case "chatbox":
-                OpenChatboxPanel();
-                SetGeneralButtonStates(CHAT_BUTTON_ID);
+                targetButtonId = CHAT_BUTTON_ID;
                 break;
 
             case "reward":
             case "rewards":
-                OpenRewardPanel();
-                SetGeneralButtonStates(REWARD_BUTTON_ID);
+                targetButtonId = REWARD_BUTTON_ID;
                 break;
 
             case "mission":
-                OpenMissionPanel();
-                SetGeneralButtonStates(MISSION_BUTTON_ID);
+                targetButtonId = MISSION_BUTTON_ID;
                 break;
 
             default:
                 Debug.LogWarning("[UIManager] Unknown general button: " + button);
+                return;
+        }
+
+        // Already on the selected panel.
+        if (currentGeneralButtonId == targetButtonId)
+            return;
+
+        // Show interstitial only when switching between panels.
+        // Skip the initial selection when no panel has been selected.
+        if (currentGeneralButtonId != -1)
+        {
+            MaxAdManager.Instance?.ShowInterstitial();
+        }
+
+        // Switch to the selected panel.
+        switch (targetButtonId)
+        {
+            case HOME_BUTTON_ID:
+                OpenHomePanel();
+                break;
+
+            case CHAT_BUTTON_ID:
+                OpenChatboxPanel();
+                break;
+
+            case REWARD_BUTTON_ID:
+                OpenRewardPanel();
+                break;
+
+            case MISSION_BUTTON_ID:
+                OpenMissionPanel();
                 break;
         }
+
+        SetGeneralButtonStates(targetButtonId);
     }
 
     private void SetGeneralButtonStates(int currentButtonId)
@@ -454,6 +487,10 @@ public class UIManager : MonoBehaviour
     {
         OpenHomePanel();
         SetGeneralButtonStates(HOME_BUTTON_ID);
+
+        homePanel?.SetShowInterstitialOnOpen(true);
+        languagePanel?.SetShowInterstitialOnOpen(true);
+        subPanel?.SetShowInterstitialOnOpen(true);
     }
 
     public void ContinueAfterLanguageSelection()
@@ -484,6 +521,14 @@ public class UIManager : MonoBehaviour
     private IEnumerator CheckSubscriptionAfterSetup()
     {
         checkSubscriptionCoroutine = null;
+
+        if (Application.version == "1.0.1")
+        {
+            Debug.Log("[UIManager] Version 1.0.1 - Skip Subscription.");
+
+            ShowHomeAfterSetup();
+            yield break;
+        }
 
         if (IAPManager.Instance == null ||
             !IAPManager.Instance.isInitialized ||

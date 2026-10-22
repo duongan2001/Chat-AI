@@ -35,7 +35,7 @@ public class LanguagePanelUIManager : PanelBaseUIController
 
     private void Start()
     {
-        int savedLanguage = PlayerPrefs.GetInt(LANGUAGE_KEY, 0);
+        int savedLanguage = MultiLanguageManager.Instance.GetCurrentLanguageId();
 
         choosingLanguage = savedLanguage;
 
@@ -126,7 +126,10 @@ public class LanguagePanelUIManager : PanelBaseUIController
 
     private void LoadCurrentLanguage()
     {
-        choosingLanguage = PlayerPrefs.GetInt(LANGUAGE_KEY, 0);
+        if (MultiLanguageManager.Instance == null)
+            return;
+
+        choosingLanguage = MultiLanguageManager.Instance.GetCurrentLanguageId();
 
         UpdateLanguageButtonToggles(choosingLanguage);
     }
@@ -136,9 +139,13 @@ public class LanguagePanelUIManager : PanelBaseUIController
         if (choosingLanguage < 0)
             return;
 
-        PlayerPrefs.SetInt(LANGUAGE_KEY, choosingLanguage);
-        PlayerPrefs.Save();
+        // Save language and update all UI texts
+        if (MultiLanguageManager.Instance != null)
+        {
+            MultiLanguageManager.Instance.ChangeLanguage(choosingLanguage);
+        }
 
+        // Update settings panel
         if (UIManager.Instance != null &&
             UIManager.Instance.settingsPanel != null)
         {

@@ -81,20 +81,20 @@ public class SubPanelUIManager : PanelBaseUIController
 
         isPanelShown = false;
 
+        StopAdCoroutines();
+
         if (isFirstShow)
         {
             isFirstShow = false;
 
             if (UIManager.Instance != null)
-            {
                 UIManager.Instance.ShowHomeAfterSetup();
-            }
+
+            // Show App Open Ad only after the first Subscription close.
+            showOpenAdCoroutine = StartCoroutine(ShowOpenAdAfterClose());
         }
 
-        // Đợi panel đóng xong rồi mới bật quảng cáo.
-        StopAdCoroutines();
-
-        //showOpenAdCoroutine = StartCoroutine(ShowOpenAdAfterClose());
+        // Restore banner after closing Subscription.
         showBannerAdCoroutine = StartCoroutine(ShowHideBannerAdDelay(true));
     }
 
@@ -260,8 +260,12 @@ public class SubPanelUIManager : PanelBaseUIController
         if (isPanelShown)
             yield break;
 
-        // TODO: Hiển thị Open Ad sau khi đóng Subscription Panel.
-        // AdManager.Instance.ShowAppOpenAd();
+        AppOpenAdManager appOpenAdManager = AppOpenAdManager.Instance;
+
+        if (appOpenAdManager == null)
+            yield break;
+
+        appOpenAdManager.ShowAppOpenAd();
     }
 
     private IEnumerator ShowHideBannerAdDelay(bool show)

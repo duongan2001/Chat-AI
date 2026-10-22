@@ -31429,7 +31429,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 27.73, y: 0}
-  m_SizeDelta: {x: 214.56, y: 96}
+  m_SizeDelta: {x: 214.56, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3427
 RectTransform:
@@ -32089,7 +32089,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 26.51, y: 0}
-  m_SizeDelta: {x: 182.98, y: 96}
+  m_SizeDelta: {x: 182.98, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &3475
 RectTransform:
@@ -34882,6 +34882,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3521}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &3714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37970,6 +37972,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3522}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &3895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38771,6 +38775,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3523}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &3945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42111,6 +42117,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3524}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
   chatItems: []
   numberOfCharacter: 0
   recommendCharacterIds: 
@@ -42625,6 +42633,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3525}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
   subPackButtonImages:
   - {fileID: 4233}
   - {fileID: 4678}
@@ -44578,6 +44588,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3526}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &4330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44947,6 +44959,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3527}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   chatboxItemPrefab: {fileID: 6390839101725029306, guid: 4e11104320bb3504c87abcbd30325e1b, type: 3}
   emptyChatboxItem: {fileID: 1196}
   chatboxItemContainer: {fileID: 2814}
@@ -46670,6 +46684,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3528}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   characterData: {fileID: 0}
   backgroundImage: {fileID: 4836}
   animTimeScale: 1
@@ -47430,6 +47446,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3529}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   characterData: {fileID: 0}
   stateNewColor: {r: 0.23529412, g: 0.6745098, b: 0.48235294, a: 1}
   stateHotColor: {r: 0.8901961, g: 0.24313726, b: 0.4862745, a: 1}
@@ -48398,6 +48416,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3530}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &4563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50244,6 +50264,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3531}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &4681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53174,6 +53196,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3532}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
   loadingDuration: 5
 --- !u!114 &4878
 MonoBehaviour:
@@ -53220,6 +53244,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3533}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &4881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54524,6 +54550,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3534}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   noMessagesAvailablePopup: {fileID: 3256}
   notEnoughRosesPopup: {fileID: 2442}
   roseCostPerMessage: 5
@@ -55002,6 +55030,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3535}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &4985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55088,6 +55118,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3536}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &4989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55163,6 +55195,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3537}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
   setupNameCanvasGroup: {fileID: 5074}
   helloCanvasGroup: {fileID: 3890}
   setupSexCanvasGroup: {fileID: 4560}
@@ -56134,6 +56168,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3538}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &5052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56490,6 +56526,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3539}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &5077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56505,6 +56543,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3540}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
   nextButton: {fileID: 5423}
   choosingLanguage: -1
   toggles:
@@ -59652,6 +59692,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3541}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
   amountText: {fileID: 3995}
   weeklyRoseAmount: 100
   yearlyRoseAmount: 150
@@ -60248,6 +60290,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3542}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   urlJsonLink: https://drive.google.com/uc?export=download&id=1bhyzzZA_inokzj2L7ew2Yw2M_qVihJkO
   currentLanguageText: {fileID: 5188}
 --- !u!114 &5313
@@ -61578,6 +61622,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3543}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   rosePackagePoints:
   - {fileID: 2480}
   - {fileID: 1959646862}
@@ -62037,6 +62083,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3544}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   characterData: {fileID: 0}
   backgroundImage: {fileID: 5242}
   characterAffectionProgressBar: {fileID: 5022}
@@ -63245,6 +63293,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3545}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 0
+  interstitialCooldown: 0
 --- !u!114 &5483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63927,6 +63977,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 3546}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   maxAdsPerDay: 5
   rosesPerAd: 10
   dailyRewardItems:
@@ -71136,6 +71188,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 253660747}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   characterDataSO: {fileID: 0}
   currentPhotoId: -1
   roseUnlockCost: 150
@@ -76055,6 +76109,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 557686365}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   sendMessageMission:
     missionName: 
     initialTarget: 10
@@ -77467,6 +77523,7 @@ MonoBehaviour:
   maxHistoryMessages: 20
   maxRetries: 3
   retryDelaySeconds: 5
+  requestTimeoutSeconds: 10
   lastReply: 
 --- !u!1 &614860911
 GameObject:
@@ -88085,6 +88142,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 1045636754}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
 --- !u!1 &1045637937
 GameObject:
   m_ObjectHideFlags: 0
@@ -107999,6 +108058,8 @@ MonoBehaviour:
   panelCanvasGroup: {fileID: 1972050539}
   fadeDuration: 0.25
   showDelayTime: 0.25
+  showInterstitialOnOpen: 1
+  interstitialCooldown: 0
   characterDataSO: {fileID: 0}
   currentPhotoId: -1
   photoImage: {fileID: 1026371282}

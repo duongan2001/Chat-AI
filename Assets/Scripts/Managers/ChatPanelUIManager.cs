@@ -366,6 +366,10 @@ public class ChatPanelUIManager : PanelBaseUIController
 
         ShowAIReplying();
 
+        Debug.Log($"[CHAT SEND] Character: {characterData.characterName} | " +
+            $"DailyChatRemain: {PlayerPrefs.GetInt(PlayerPrefKey.DailyChatRemain.ToString(), 0)} | " +
+            $"Message: {messageText}");
+
         fridayAI.UserSendMessage(messageText);
     }
 

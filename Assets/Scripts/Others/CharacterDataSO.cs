@@ -186,7 +186,6 @@ public class CharacterDataSO : ScriptableObject
         sb.AppendLine("- Use a natural, conversational speaking style.");
         sb.AppendLine("- Avoid overly formal or robotic responses.");
         sb.AppendLine("- Keep most replies short and suitable for mobile chat.");
-        sb.AppendLine("- Respond in the same language as the user unless requested otherwise.");
         sb.AppendLine("- Do not invent shared past events or memories that were not established.");
 
         systemPrompt = sb.ToString();

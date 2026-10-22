@@ -50,6 +50,7 @@ public class MaxAdManager : MonoBehaviour
 
     #endregion
 
+
     #region UNITY METHODS
 
     private void SetupInstance()
@@ -87,6 +88,7 @@ public class MaxAdManager : MonoBehaviour
     }
 
     #endregion
+
 
     #region INITIALIZATION
 
@@ -195,6 +197,7 @@ public class MaxAdManager : MonoBehaviour
 
     #endregion
 
+
     #region INTERSTITIAL
 
     public void LoadInterstitial()
@@ -211,8 +214,12 @@ public class MaxAdManager : MonoBehaviour
                && MaxSdk.IsInterstitialReady(interstitialAdUnitId);
     }
 
+
     public bool CanShowInterstitial()
     {
+        if (IsInterstitialDisabledVersion())
+            return false;
+
         if (!IsInterstitialReady() || fullScreenAdShowing || isAppOpenShowing)
             return false;
 
@@ -220,9 +227,12 @@ public class MaxAdManager : MonoBehaviour
             return false;
 
         FirebaseManager firebase = FirebaseManager.Instance;
+
         return firebase == null ||
-               (firebase.canShowInterstitialAd && firebase.IsDoneCooldownInterstitialAd());
+               (firebase.canShowInterstitialAd &&
+                firebase.IsDoneCooldownInterstitialAd());
     }
+
 
     public bool ShowInterstitial(float cooldown = 0f)
     {
@@ -273,7 +283,13 @@ public class MaxAdManager : MonoBehaviour
 
     private void OnInterstitialClicked(string adUnitId, MaxSdkBase.AdInfo adInfo) { }
 
+    private bool IsInterstitialDisabledVersion()
+    {
+        return Application.version == "1.0.1";
+    }
+
     #endregion
+
 
     #region REWARDED
 
@@ -366,6 +382,7 @@ public class MaxAdManager : MonoBehaviour
 
     #endregion
 
+
     #region BANNER
 
     private void InitializeBanner()
@@ -443,6 +460,7 @@ public class MaxAdManager : MonoBehaviour
 
     #endregion
 
+
     #region APP OPEN
 
     public void LoadAppOpen()
@@ -510,6 +528,7 @@ public class MaxAdManager : MonoBehaviour
 
     #endregion
 
+
     #region AD PERMISSION
 
     private bool IsVipActive()
@@ -524,6 +543,7 @@ public class MaxAdManager : MonoBehaviour
     }
 
     #endregion
+
 
     #region RETRY AND REVENUE
 

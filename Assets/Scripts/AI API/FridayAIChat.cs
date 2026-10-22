@@ -24,6 +24,9 @@ public class FridayAIChat : MonoBehaviour
     [SerializeField] private int maxRetries = 3;
     [SerializeField] private float retryDelaySeconds = 5f;
 
+    [Header("--- REQUEST TIMEOUT ---")]
+    [SerializeField] private int requestTimeoutSeconds = 10;
+
     public string lastReply;
     public bool IsRequesting { get; private set; }
     public int CurrentCharacterDataIndex { get; private set; } = -1;
@@ -108,11 +111,16 @@ public class FridayAIChat : MonoBehaviour
     // The opening instruction is sent to the API but is NOT saved as a fake user message.
     public void GenerateOpeningMessage()
     {
-        if (CurrentCharacterDataIndex < 0 || IsRequesting || openingRequested) return;
-        if (ChatHistoryManager.Instance == null) return;
+        if (CurrentCharacterDataIndex < 0 || IsRequesting || openingRequested) 
+            return;
+
+        if (ChatHistoryManager.Instance == null) 
+            return;
 
         ChatHistory history = ChatHistoryManager.Instance.LoadChatHistory(CurrentCharacterDataIndex);
-        if (history != null && history.messages != null && history.messages.Count > 0) return;
+        
+        if (history != null && history.messages != null && history.messages.Count > 0) 
+            return;
 
         openingRequested = true;
         StartProcessingIfNeeded();
@@ -120,12 +128,15 @@ public class FridayAIChat : MonoBehaviour
 
     private void StartProcessingIfNeeded()
     {
-        if (IsRequesting || processingCoroutine != null) return;
+        if (IsRequesting || processingCoroutine != null) 
+            return;
+
         if (ChatHistoryManager.Instance == null)
         {
             EmitError(CurrentCharacterDataIndex, "ChatHistoryManager not found.");
             return;
         }
+
         processingCoroutine = StartCoroutine(ProcessChatRoutine());
     }
 
@@ -153,9 +164,7 @@ public class FridayAIChat : MonoBehaviour
             string reply = null;
             string error = null;
 
-            yield return StartCoroutine(RequestReplyRoutine(messages,
-                value => reply = value,
-                value => error = value));
+            yield return StartCoroutine(RequestReplyRoutine(messages, value => reply = value, value => error = value));
 
             if (!string.IsNullOrEmpty(error) || string.IsNullOrWhiteSpace(reply))
             {
@@ -201,11 +210,28 @@ public class FridayAIChat : MonoBehaviour
 
     private JArray BuildMessages(int characterIndex, bool opening)
     {
+        string languageName = "English";
+
+        if (MultiLanguageManager.Instance != null)
+        {
+            int languageId = MultiLanguageManager.Instance.GetCurrentLanguageId();
+            Language language = (Language)languageId;
+
+            languageName = MultiLanguageManager.Instance.GetLanguageEnglishName(language);
+        }
+
+        string finalSystemPrompt = (systemPrompt ?? string.Empty) +
+            $"\n\n=== LANGUAGE INSTRUCTIONS ===\n" +
+            $"- Always respond in {languageName}, regardless of the language used by the user.\n" +
+            $"- Keep the character's personality, speaking style, and emotions natural in {languageName}.\n" +
+            $"- Only switch languages if the user explicitly requests it.";
+
+
         JArray result = new JArray();
         result.Add(new JObject
         {
             ["role"] = "system",
-            ["content"] = systemPrompt ?? string.Empty
+            ["content"] = finalSystemPrompt
         });
 
         ChatHistory history = ChatHistoryManager.Instance.LoadChatHistory(characterIndex);

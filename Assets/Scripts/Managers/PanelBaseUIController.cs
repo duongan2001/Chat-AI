@@ -4,10 +4,15 @@ using UnityEngine;
 public class PanelBaseUIController : MonoBehaviour
 {
     #region VARIABLES
-
+    
+    [Header("--- PANEL SETTINGS ---")]
     [SerializeField] CanvasGroup panelCanvasGroup;
     [SerializeField] float fadeDuration = 0.25f;
     [SerializeField] float showDelayTime = 0.25f;
+
+    [Header("--- INTERSTITIAL AD SETTINGS ---")]
+    [SerializeField] private bool showInterstitialOnOpen = false;
+    [SerializeField] private float interstitialCooldown = 0f;
 
     private Coroutine fadeCoroutine;
     private Coroutine showDelayCoroutine;
@@ -47,6 +52,8 @@ public class PanelBaseUIController : MonoBehaviour
         panelCanvasGroup.blocksRaycasts = true;
 
         StartFade(1f);
+
+        TryShowInterstitial();
     }
 
     public virtual void ShowDelay()
@@ -77,6 +84,11 @@ public class PanelBaseUIController : MonoBehaviour
         panelCanvasGroup.blocksRaycasts = false;
 
         StartFade(0f);
+    }
+
+    public void SetShowInterstitialOnOpen(bool value)
+    {
+        showInterstitialOnOpen = value;
     }
 
     #endregion
@@ -149,6 +161,22 @@ public class PanelBaseUIController : MonoBehaviour
 
         panelCanvasGroup.alpha = targetAlpha;
         fadeCoroutine = null;
+    }
+
+    #endregion
+
+
+    #region INTERSTITIAL AD METHODS
+
+    private void TryShowInterstitial()
+    {
+        if (!showInterstitialOnOpen)
+            return;
+
+        if (MaxAdManager.Instance == null)
+            return;
+
+        MaxAdManager.Instance.ShowInterstitial(interstitialCooldown);
     }
 
     #endregion

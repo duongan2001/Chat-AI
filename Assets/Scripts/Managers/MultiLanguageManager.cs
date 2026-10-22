@@ -157,7 +157,7 @@ public class MultiLanguageManager : MonoBehaviour
 
     #region LANGUAGE HELPER METHODS
 
-    private string GetLanguageEnglishName(Language language)
+    public string GetLanguageEnglishName(Language language)
     {
         switch (language)
         {
