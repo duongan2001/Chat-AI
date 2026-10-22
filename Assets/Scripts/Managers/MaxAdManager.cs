@@ -538,8 +538,14 @@ public class MaxAdManager : MonoBehaviour
 
     private bool CanShowForcedAds()
     {
-        // Do not show forced ads until subscription ownership is known.
-        return IAPManager.Instance != null && IAPManager.Instance.isInitialized && !IsVipActive();
+        // Version 1.0.1: Skip subscription check.
+        if (Application.version == "1.0.1")
+            return true;
+
+        // Other versions: Check IAP and VIP status.
+        return IAPManager.Instance != null &&
+               IAPManager.Instance.isInitialized &&
+               !IAPManager.Instance.isSubscriptionPurchased;
     }
 
     #endregion

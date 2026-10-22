@@ -59,17 +59,13 @@ public class CharacterPhotoManager : MonoBehaviour
 
     private void SetupInstance()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
+            Destroy(gameObject);
             return;
         }
 
-        if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -281,26 +277,22 @@ public class CharacterPhotoManager : MonoBehaviour
 
     private IEnumerator SetupDefaultPhotos()
     {
-        if (characterDatas == null)
-        {
+        if (characterDatas == null || characterDatas.Length == 0)
             yield break;
-        }
+
+        int downloadCount = 0;
 
         for (int i = 0; i < characterDatas.Length; i++)
         {
             CharacterDataSO character = characterDatas[i];
 
             if (character == null || character.numberOfPhoto <= 0)
-            {
                 continue;
-            }
 
             character.SetListPhotoNumberOfElement();
 
             if (character.photoSprites[0] != null)
-            {
                 continue;
-            }
 
             if (character.IsPhotoDownloaded(0))
             {
@@ -308,9 +300,19 @@ public class CharacterPhotoManager : MonoBehaviour
             }
             else
             {
-                yield return StartCoroutine(character.DownloadPhoto(0));
+                // Start download without waiting for the previous character.
+                StartCoroutine(character.DownloadPhoto(0));
+
+                downloadCount++;
+
+                Debug.Log($"[CharacterPhotoManager] Start downloading: {character.characterName}");
             }
+
+            // Distribute download starts across frames.
+            yield return null;
         }
+
+        Debug.Log($"[CharacterPhotoManager] Started {downloadCount} photo downloads.");
     }
 
     public void SetChatItemDefaultPhoto(int id)
